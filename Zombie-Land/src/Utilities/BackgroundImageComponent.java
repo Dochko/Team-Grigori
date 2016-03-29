@@ -1,7 +1,9 @@
+package Utilities;
+
 import javax.swing.*;
 import java.awt.*;
 
-class BackgroundImageComponent extends JPanel
+public class BackgroundImageComponent extends JPanel
 {
     Image image;
 

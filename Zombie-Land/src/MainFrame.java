@@ -1,3 +1,6 @@
+import Utilities.BackgroundImageComponent;
+import Utilities.ImageHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

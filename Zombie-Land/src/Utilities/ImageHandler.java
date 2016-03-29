@@ -1,3 +1,5 @@
+package Utilities;
+
 import java.awt.*;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
