@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
     }
 
 
+
     @SuppressWarnings("unchecked")
     private void initComponents() {
         setBounds(0, 0, 970, 545);
