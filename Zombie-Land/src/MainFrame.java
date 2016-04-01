@@ -2,6 +2,8 @@ import Utilities.BackgroundImageComponent;
 import Utilities.ImageHandler;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -118,11 +120,22 @@ public class MainFrame extends JFrame {
     }
 
     private void newGameActionPerformed(ActionEvent evt) {
+        this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                new ImageIcon("images/cur263.gif").getImage(), new Point(13, 13), "custom cursor"));
+
         Object[] values = {"Normal", "Medium", "Hard"};
-        Object choice = JOptionPane.showInputDialog(null,
+        JOptionPane pane = new JOptionPane("Select Difficulty:",
+                JOptionPane.QUESTION_MESSAGE,
+                JOptionPane.OK_CANCEL_OPTION, null,
+                values, values[0]);
+        JDialog dialog = pane.createDialog("Custom dialog");
+        dialog.setCursor(this.getCursor());
+        dialog.setVisible(true);
+        Object choice = pane.getValue();
+        /*Object choice = JOptionPane.showInputDialog(null,
                 "Select Difficulty:", "input",
                 JOptionPane.INFORMATION_MESSAGE, null,
-                values, values[0]);
+                values, values[0]);*/
         try{
             switch ((String)choice){
                 case "Normal":
