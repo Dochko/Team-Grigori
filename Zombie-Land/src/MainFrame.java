@@ -1,5 +1,6 @@
 import Utilities.BackgroundImageComponent;
 import Utilities.ImageHandler;
+import Utilities.Sound;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -35,6 +36,9 @@ public class MainFrame extends JFrame {
         setContentPane(jp);
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 new ImageIcon("images/cur263.gif").getImage(), new Point(13, 13), "custom cursor"));
+
+        Sound intro = new Sound("./sound/Intro.wav");
+        intro.Loop();
 
         jLabel1 = new JLabel();
         exit = new JButton();
