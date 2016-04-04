@@ -3,13 +3,11 @@ import Utilities.ImageHandler;
 import Utilities.Sound;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-public class MainFrame extends JFrame {
+public class StartScreen extends JFrame {
 
     private JButton exit;
     private JButton jButton1;
@@ -17,7 +15,7 @@ public class MainFrame extends JFrame {
     private JButton newGame;
     private JButton newGame1;
 
-    private MainFrame() {
+    public StartScreen() {
         initComponents();
         setIconImage(new ImageIcon("images/IconSmall_Zombie.gif").getImage());
         setTitle("Zombie - Land");
@@ -30,6 +28,7 @@ public class MainFrame extends JFrame {
         setBounds(0, 0, 970, 545);
         setResizable(false);
         setLocationRelativeTo(null);
+        setUndecorated(true);
         ImageHandler ih = new ImageHandler(this);
         Image img = ih.loadImage("images/image.jpg");
         JPanel jp = new BackgroundImageComponent(img);
@@ -145,9 +144,11 @@ public class MainFrame extends JFrame {
         try{
             switch ((String)choice){
                 case "Normal":
-                    this.setVisible(false);
-                    dispose();
-                    this.setVisible(true);
+                    //this.setVisible(false);
+                    //dispose();
+                    setState(Frame.ICONIFIED);
+                    TheGame newgame = new TheGame();
+                    newgame.setVisible(true);
                     break;
                 case "Medium":
                     break;
@@ -177,9 +178,6 @@ public class MainFrame extends JFrame {
         System.exit(0);
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
-    }
 
 
 }
