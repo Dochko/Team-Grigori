@@ -9,7 +9,7 @@ public class ImageHandler
     private MediaTracker mt;
     private int count = -1;
     /**
-     * Constructor to assign container refernce for
+     * Constructor to assign container reference for
      * MediaTracker object
      *
      * @param  c  Container object to assign

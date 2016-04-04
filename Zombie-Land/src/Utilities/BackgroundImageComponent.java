@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class BackgroundImageComponent extends JPanel
 {
-    Image image;
+    private Image image;
 
     public BackgroundImageComponent(Image image)
     {

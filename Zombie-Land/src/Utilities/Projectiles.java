@@ -8,7 +8,6 @@ public class Projectiles {
         int sideB = pointA.y - pointB.y;
         double hypotenuse = Math.sqrt(Math.pow(sideA,2) + Math.pow(sideB,2));
 
-        double cosine = sideA / hypotenuse;
-        return cosine;
+        return sideA / hypotenuse;
     }
 }

@@ -133,7 +133,8 @@ public class MainFrame extends JFrame {
                 JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.OK_CANCEL_OPTION, null,
                 values, values[0]);
-        JDialog dialog = pane.createDialog("Custom dialog");
+        JDialog dialog = pane.createDialog("Difficulty Settings");
+        dialog.setIconImage(new ImageIcon("images/IconSmall_Zombie.gif").getImage());
         dialog.setCursor(this.getCursor());
         dialog.setVisible(true);
         Object choice = pane.getValue();
@@ -146,6 +147,7 @@ public class MainFrame extends JFrame {
                 case "Normal":
                     this.setVisible(false);
                     dispose();
+                    this.setVisible(true);
                     break;
                 case "Medium":
                     break;

@@ -13,21 +13,15 @@ public class Sound {
 
     private String path;
 
-    AudioInputStream ais;
-    Clip clip;
+    private AudioInputStream ais;
+    private Clip clip;
 
     public Sound(String path) {
         this.path = path;
         try {
             clip = AudioSystem.getClip();
             ais = AudioSystem.getAudioInputStream(new File(path));
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
     }
