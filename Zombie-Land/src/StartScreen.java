@@ -1,6 +1,8 @@
 import Utilities.BackgroundImageComponent;
 import Utilities.ImageHandler;
 import Utilities.Sound;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,7 @@ public class StartScreen extends JFrame {
     private JLabel jLabel1;
     private JButton newGame;
     private JButton newGame1;
+    private Sound intro;
 
     public StartScreen() {
         initComponents();
@@ -36,7 +39,7 @@ public class StartScreen extends JFrame {
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 new ImageIcon("images/cur263.gif").getImage(), new Point(13, 13), "custom cursor"));
 
-        Sound intro = new Sound("./sound/Intro.wav");
+        intro = new Sound("./sound/Intro.wav");
         intro.Loop();
 
         jLabel1 = new JLabel();
@@ -149,6 +152,7 @@ public class StartScreen extends JFrame {
                     setState(Frame.ICONIFIED);
                     TheGame newgame = new TheGame();
                     newgame.setVisible(true);
+                    intro.Stop();
                     break;
                 case "Medium":
                     break;

@@ -27,6 +27,7 @@ public class Sound {
     }
 
     public void Play() {
+        clip.start();
     }
 
     public void Loop(){
@@ -38,5 +39,9 @@ public class Sound {
 
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void Stop(){
+        clip.stop();
     }
 }
