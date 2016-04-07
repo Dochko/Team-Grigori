@@ -1,8 +1,6 @@
 import Utilities.BackgroundImageComponent;
 import Utilities.ImageHandler;
 import Utilities.Sound;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,16 +40,17 @@ public class StartScreen extends JFrame {
         intro = new Sound("./sound/Intro.wav");
         intro.Loop();
 
-        jLabel1 = new JLabel();
+        //jLabel1 = new JLabel();
         exit = new JButton();
         newGame = new JButton();
         newGame1 = new JButton();
         jButton1 = new JButton();
 
-
+        /*
         jLabel1.setFont(new Font("MV Boli", Font.BOLD, 36));
         jLabel1.setForeground(new Color(0, 120, 0));
         jLabel1.setText("Z O M B I E - L A N D");
+        */
 
         newGame.setBackground(new Color(0, 0, 0));
         newGame.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -60,6 +59,8 @@ public class StartScreen extends JFrame {
         newGame.setBorderPainted(false);
         newGame.setText("Start");
         newGame.addActionListener(this::newGameActionPerformed);
+        HoverEvent(newGame);
+
 
         newGame1.setBackground(new Color(0, 0, 0));
         newGame1.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -68,6 +69,7 @@ public class StartScreen extends JFrame {
         newGame1.setBorderPainted(false);
         newGame1.setText("High Score");
         newGame1.addActionListener(this::newGame1ActionPerformed);
+        HoverEvent(newGame1);
 
         jButton1.setBackground(new Color(0, 0, 0));
         jButton1.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -76,6 +78,7 @@ public class StartScreen extends JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setText("Help");
         jButton1.addActionListener(this::jButton1ActionPerformed);
+        HoverEvent(jButton1);
 
         exit.setBackground(new Color(0, 0, 0));
         exit.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -84,6 +87,7 @@ public class StartScreen extends JFrame {
         exit.setBorderPainted(false);
         exit.setText("Exit");
         exit.addActionListener(this::exitActionPerformed);
+        HoverEvent(exit);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,9 +98,9 @@ public class StartScreen extends JFrame {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(190, 190, 190)
-                                                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
+                                        //.addGroup(layout.createSequentialGroup()
+                                                //.addGap(190, 190, 190)
+                                                //.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(600, 600, 600)
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -110,9 +114,9 @@ public class StartScreen extends JFrame {
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-                                .addGap(74, 74, 74)
+                                //.addGap(87, 87, 87)
+                                //.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+                                .addGap(200, 200, 200)
                                 .addComponent(newGame, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(newGame1, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
@@ -121,6 +125,7 @@ public class StartScreen extends JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                                 .addComponent(exit, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
                                 .addGap(50, 50, 50))
+
         );
 
         pack();
@@ -182,6 +187,28 @@ public class StartScreen extends JFrame {
         System.exit(0);
     }
 
-
+    /**
+     * Hovered:
+     *      background color -> green
+     *      foreground color -> black
+     *
+     * Hovered out:
+     *      background color -> black
+     *      foreground color -> green
+     *
+     * @param button
+     */
+    private void HoverEvent(javax.swing.JButton button){
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(0, 120, 0));
+                button.setForeground(Color.black);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(Color.black);
+                button.setForeground(new Color(0, 120, 0));
+            }
+        });
+    }
 
 }
