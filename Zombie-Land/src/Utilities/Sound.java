@@ -2,12 +2,7 @@ package Utilities;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-/**
- * Created by nuro on 4/3/16.
- */
 
 public class Sound {
 
@@ -19,29 +14,23 @@ public class Sound {
     public Sound(String path) {
         this.path = path;
         try {
-            clip = AudioSystem.getClip();
-            ais = AudioSystem.getAudioInputStream(new File(path));
+            this.clip = AudioSystem.getClip();
+            this.ais = AudioSystem.getAudioInputStream(new File(path));
+            this.clip.open(this.ais);
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
     }
 
     public void Play() {
-        clip.start();
-    }
-
-    public void Loop(){
-
-        try {
-            clip.open(ais);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }catch (IOException | LineUnavailableException ex){
-
-            System.out.println(ex.getMessage());
-        }
+        this.clip.start();
     }
 
     public void Stop(){
-        clip.stop();
+        this.clip.stop();
+    }
+
+    public void Loop(){
+        this.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }
