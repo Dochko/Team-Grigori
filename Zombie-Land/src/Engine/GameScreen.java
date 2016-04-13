@@ -90,7 +90,7 @@ public class GameScreen extends JFrame {
                 try {
                     gameRender();
                 } catch (IOException e) {
-                    // e.printStackTrace();
+                    e.printStackTrace();
                 }
                 gameDraw();
 
@@ -300,7 +300,7 @@ public class GameScreen extends JFrame {
                 g2.dispose();
             } catch (NullPointerException e) {
                 // g2.dispose();
-                // e.printStackTrace();
+                e.printStackTrace();
             }
         }
 

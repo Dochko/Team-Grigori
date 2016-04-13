@@ -1,17 +1,22 @@
 package Models;
 
 import Engine.GameScreen;
+import Utilities.Animator;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Enemy {
     BufferedImage image;
     String normalZombiePath = "Resources/zombie.png";
-
+    //TODO: Enemy test animation init
+    private ArrayList<BufferedImage> spritesMove;
+    private Animator animatorMove;
 
     private int width;
     private int height;
@@ -34,15 +39,35 @@ public class Enemy {
 
     public Enemy(int type) {
         this.type = type;
+        this.spritesMove = new ArrayList<>();
 
-        // Normal zombie
+        // Enemy Types
         switch (type) {
+            // Normal zombie
             case 1:
+                //TODO: enemy test animation
+                try {
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving3.png")));
+
+                    this.animatorMove = new Animator(this.spritesMove);
+                    this.animatorMove.setSpeed(200);
+                    this.animatorMove.start();
+
+                    animatorMove.update(System.currentTimeMillis());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                /*
                 try {
                     this.image = ImageIO.read(new File(this.normalZombiePath));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                */
 
                 this.speed = 2;
                 this.health = 2;
@@ -51,8 +76,13 @@ public class Enemy {
                 break;
         }
 
+        /*
         this.width = image.getWidth();
         this.height = image.getHeight();
+        */
+
+        this.width = this.animatorMove.sprite.getWidth();
+        this.height = this.animatorMove.sprite.getHeight();
 
         int spawningPointLocations = (int) (Math.random() * 4);
         switch (spawningPointLocations) {
@@ -124,6 +154,8 @@ public class Enemy {
         this.x += (int) (dx / rad * speed);
         this.y += (int) (dy / rad * speed);
 
+        this.animatorMove.update(System.currentTimeMillis());
+
         this.enemyBorder.x = this.x;
         this.enemyBorder.y = this.y;
 
@@ -139,7 +171,7 @@ public class Enemy {
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
-        g.drawImage(this.image, this.x, this.y, null);
+        g.drawImage(this.animatorMove.sprite, this.x, this.y, this.width, this.height, null);
         g.setTransform(reset);
     }
 }

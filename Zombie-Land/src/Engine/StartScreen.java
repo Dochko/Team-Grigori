@@ -170,7 +170,9 @@ public class StartScreen extends JFrame {
                 default:
                     break;
             }
-        }catch (NullPointerException ignored){}
+        }catch (NullPointerException ignored){
+            ignored.printStackTrace();
+        }
     }
 
     private void highScoreScreen(ActionEvent evt) {

@@ -1,6 +1,7 @@
 package Models;
 
 import Engine.GameScreen;
+import Utilities.Animator;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,10 +9,15 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Player{
     private BufferedImage image;
     private String path = "Resources/player.png";
+
+    //TODO: Test player animation init
+    private ArrayList<BufferedImage> spritesMove;
+    private Animator animatorMove;
 
     private int width;
     private int height;
@@ -39,14 +45,41 @@ public class Player{
     private double health;
 
     public Player() {
+        this.spritesMove = new ArrayList<>();
+
+        try {
+            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne0.png")));
+            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne1.png")));
+            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne2.png")));
+            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne3.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.animatorMove = new Animator(this.spritesMove);
+        this.animatorMove.setSpeed(200);
+        this.animatorMove.start();
+        animatorMove.update(System.currentTimeMillis());
+
+        /*
         try {
             image = ImageIO.read(new File(this.path));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
 
+
+        //TODO: test player animation
+        /*
         this.width = image.getWidth(null);
         this.height = image.getHeight(null);
+        */
+
+        this.width = this.animatorMove.sprite.getWidth();
+        this.height = this.animatorMove.sprite.getHeight();
+
+
 
         this.x = GameScreen.WIDTH / 2;
         this.y = GameScreen.HEIGHT / 2;
@@ -98,7 +131,6 @@ public class Player{
 
     public void hit() {
         this.health -= 10f / 20f;
-        // System.out.println(this.health);
         if (health <= 0) {
             this.health = 0;
             this.isDead = true;
@@ -108,15 +140,22 @@ public class Player{
     public void update() {
         if (this.left) {
             this.dx = -this.speed;
+            animatorMove.update(System.currentTimeMillis());
         }
+
         if (this.right) {
             this.dx = this.speed;
+            animatorMove.update(System.currentTimeMillis());
         }
+
         if (this.up) {
             this.dy = -this.speed;
+            animatorMove.update(System.currentTimeMillis());
         }
+
         if (this.down) {
             this.dy = this.speed;
+            animatorMove.update(System.currentTimeMillis());
         }
 
         this.x += this.dx;
@@ -150,15 +189,14 @@ public class Player{
         }
     }
 
-    public void draw(Graphics2D g) throws IOException {
+    public void draw(Graphics2D g) {
         // Both methods work nearly the same way
 
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
-        g.drawImage(this.image, this.x, this.y, null);
+        g.drawImage(this.animatorMove.sprite, this.x, this.y, this.width, this.height, null);
         g.setTransform(reset);
-
 
         /*
         AffineTransform backup = g.getTransform();
