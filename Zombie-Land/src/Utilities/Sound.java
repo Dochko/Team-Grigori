@@ -6,13 +6,11 @@ import java.io.IOException;
 
 public class Sound {
 
-    private String path;
 
     private AudioInputStream ais;
     private Clip clip;
 
     public Sound(String path) {
-        this.path = path;
         try {
             this.clip = AudioSystem.getClip();
             this.ais = AudioSystem.getAudioInputStream(new File(path));
@@ -23,14 +21,34 @@ public class Sound {
     }
 
     public void Play() {
+        if(!this.clip.isRunning()){
+            this.clip.setFramePosition(0);
+            this.clip.start();
+        }
+    }
+    public void PlayOnce(){
         this.clip.start();
     }
 
     public void Stop(){
         this.clip.stop();
+        this.clip.setFramePosition(0);
+    }
+
+    public void Close(){
+        this.clip.stop();
+        this.clip.close();
     }
 
     public void Loop(){
         this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    public void ShootLoop(){
+        if(!this.clip.isRunning()){
+            this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+
+        this.clip.setFramePosition(0);
+
     }
 }

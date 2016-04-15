@@ -104,7 +104,7 @@ public class Enemy {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                
+
 
                 this.speed = 2;
                 this.health = 3;
