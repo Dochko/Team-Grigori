@@ -94,7 +94,7 @@ public class Player{
         this.dx = 0;
         this.dy = 0;
         this.speed = 5;
-        this.health = 10;
+        this.health = 100;
         this.isDead = false;
 
         this.playerBorder = new Rectangle(this.x, this.y, this.width, this.height);

@@ -12,11 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Enemy {
-    BufferedImage image;
-    String normalZombiePath = "Resources/zombie.png";
     //TODO: Enemy test animation init
     private ArrayList<BufferedImage> spritesMove;
-    private Animator animatorMove;
+    private ArrayList<BufferedImage> spritesDie;
+    private Animator animator;
 
     private int width;
     private int height;
@@ -40,49 +39,18 @@ public class Enemy {
     public Enemy(int type) {
         this.type = type;
         this.spritesMove = new ArrayList<>();
+        this.spritesDie = new ArrayList<>();
 
         // Enemy Types
-        switch (type) {
-            // Normal zombie
-            case 1:
-                //TODO: enemy test animation
-                try {
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving2.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving3.png")));
-
-                    this.animatorMove = new Animator(this.spritesMove);
-                    this.animatorMove.setSpeed(200);
-                    this.animatorMove.start();
-
-                    animatorMove.update(System.currentTimeMillis());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                /*
-                try {
-                    this.image = ImageIO.read(new File(this.normalZombiePath));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                */
-
-                this.speed = 2;
-                this.health = 2;
-                break;
-            default:
-                break;
-        }
+        enemyTypes(type);
 
         /*
         this.width = image.getWidth();
         this.height = image.getHeight();
         */
 
-        this.width = this.animatorMove.sprite.getWidth();
-        this.height = this.animatorMove.sprite.getHeight();
+        this.width = this.animator.sprite.getWidth();
+        this.height = this.animator.sprite.getHeight();
 
         int spawningPointLocations = (int) (Math.random() * 4);
         switch (spawningPointLocations) {
@@ -110,6 +78,112 @@ public class Enemy {
         this.isDead = false;
 
         this.enemyBorder = new Rectangle(this.x, this.y, this.width, this.height);
+    }
+
+    private void enemyTypes(int type) {
+        switch (type) {
+            // Normal zombie
+            case 1:
+                //TODO: enemy test animation
+                try {
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving3.png")));
+
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing3.png")));
+
+                    this.animator = new Animator(this.spritesMove);
+                    this.animator.setSpeed(200);
+                    this.animator.start();
+
+                    animator.update(System.currentTimeMillis());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
+
+                this.speed = 2;
+                this.health = 3;
+                break;
+            case 2:
+                try {
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove3.png")));
+
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing3.png")));
+
+                    this.animator = new Animator(this.spritesMove);
+                    this.animator.setSpeed(200);
+                    this.animator.start();
+
+                    animator.update(System.currentTimeMillis());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                this.speed = 5;
+                this.health = 2;
+                break;
+            case 3:
+                try {
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove3.png")));
+
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing3.png")));
+
+                    this.animator = new Animator(this.spritesMove);
+                    this.animator.setSpeed(200);
+                    this.animator.start();
+
+                    animator.update(System.currentTimeMillis());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                this.speed = 3;
+                this.health = 4;
+                break;
+            case 4:
+                try {
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove3.png")));
+
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing3.png")));
+
+                    this.animator = new Animator(this.spritesMove);
+                    this.animator.setSpeed(200);
+                    this.animator.start();
+
+                    animator.update(System.currentTimeMillis());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                this.speed = 2;
+                this.health = 20;
+                break;
+            default:
+                break;
+        }
     }
 
     public double getX() {
@@ -144,20 +218,37 @@ public class Enemy {
         if(this.isReady) {
             this.health--;
             if (health <= 0) {
+                GameScreen.deadEnemiesCounter--;
                 this.isDead = true;
+                this.DeadEnemy();
             }
         }
     }
 
+    private void DeadEnemy(){
+        this.animator = new Animator(this.spritesDie);
+        this.animator.setSpeed(200);
+        this.animator.start();
+        animator.update(System.currentTimeMillis());
+    }
+
     public void update() {
-        this.rad = (int) Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy, 2));
-        this.x += (int) (dx / rad * speed);
-        this.y += (int) (dy / rad * speed);
+        if(!this.isDead()){
+            this.rad = (int) Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy, 2));
+            this.x += (int) (dx / rad * speed);
+            this.y += (int) (dy / rad * speed);
 
-        this.animatorMove.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
 
-        this.enemyBorder.x = this.x;
-        this.enemyBorder.y = this.y;
+            this.enemyBorder.x = this.x;
+            this.enemyBorder.y = this.y;
+        }else{
+            if(animator.isDoneAnimating()){
+                animator.pause();
+            }else{
+                this.animator.update(System.currentTimeMillis());
+            }
+        }
 
         if (!this.isReady) {
             if (this.x > 0 && this.x < GameScreen.WIDTH - this.width &&
@@ -171,7 +262,9 @@ public class Enemy {
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
-        g.drawImage(this.animatorMove.sprite, this.x, this.y, this.width, this.height, null);
+        g.drawImage(this.animator.sprite, this.x, this.y, this.width, this.height, null);
         g.setTransform(reset);
     }
+
+
 }

@@ -151,7 +151,7 @@ public class StartScreen extends JFrame {
                 "Select Difficulty:", "input",
                 JOptionPane.INFORMATION_MESSAGE, null,
                 values, values[0]);*/
-        if((String)choice == null) {
+        if(choice == null) {
             choice = "";
         }
         switch ((String)choice){

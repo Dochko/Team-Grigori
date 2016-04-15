@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen extends JFrame {
     public static int WIDTH = 970;
@@ -27,7 +28,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 60;
+    private int FPS = 1000 / 30;
     private int averageFPS;
 
     public static Player player;
@@ -40,7 +41,8 @@ public class GameScreen extends JFrame {
     private int waveDelay = 2000; // wave start delay
     private int waveNumber;
     private int defaultSpawnEnemySize = 10;
-    private int endWaveNumber = 3;
+    private int endWaveNumber = 5;
+    public static int deadEnemiesCounter;
 
     private boolean gameEnded;
 
@@ -52,9 +54,9 @@ public class GameScreen extends JFrame {
     private void initComponents() {
         this.panel = new GamePanel();
         this.setContentPane(this.panel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setBounds(0, 0, this.WIDTH, this.HEIGHT);
+        this.setBounds(0, 0, WIDTH, HEIGHT);
         this.setLocationRelativeTo(null);
         // this.setUndecorated(true);
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
@@ -95,8 +97,9 @@ public class GameScreen extends JFrame {
                 gameDraw();
 
                 if (player.isDead() && player.getAnimator()) {
-                    System.out.println("ma toi umrql ma");
+
                     timer.stop();
+                    enemies.clear();
                 }
             });
 
@@ -135,7 +138,7 @@ public class GameScreen extends JFrame {
             }
 
             if (!gameEnded) {
-                if(waveStartTimer == 0 && enemies.size() == 0) {
+                if(waveStartTimer == 0 && deadEnemiesCounter == 0) {
                     waveNumber++;
                     waveStart = false;
                     waveStartTimer = System.nanoTime();
@@ -150,7 +153,7 @@ public class GameScreen extends JFrame {
             }
 
             // create enemies
-            if(waveStart && enemies.size() == 0) {
+            if(waveStart && (enemies.size() == 0 || deadEnemiesCounter == 0)) {
                 createNewEnemies();
             }
 
@@ -180,18 +183,20 @@ public class GameScreen extends JFrame {
 
             // enemy update
             double enemyRotation = 0f;
-            for (int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).update();
+            for (Enemy enemy1 : enemies) {
+                enemy1.update();
 
-                double deltaX = player.getX() - enemies.get(i).getX();
-                double deltaY = player.getY() - enemies.get(i).getY();
+                double deltaX = player.getX() - enemy1.getX();
+                double deltaY = player.getY() - enemy1.getY();
 
-                enemyRotation = -Math.atan2(deltaX, deltaY);
-                enemyRotation = Math.toDegrees(enemyRotation) + 180;
+                if(!enemy1.isDead()){
+                    enemyRotation = -Math.atan2(deltaX, deltaY);
+                    enemyRotation = Math.toDegrees(enemyRotation) + 180;
 
-                enemies.get(i).setAngle(enemyRotation);
-                enemies.get(i).setDx(deltaX);
-                enemies.get(i).setDy(deltaY);
+                    enemy1.setAngle(enemyRotation);
+                    enemy1.setDx(deltaX);
+                    enemy1.setDy(deltaY);
+                }
             }
 
             // bullet-enemy collision
@@ -199,11 +204,10 @@ public class GameScreen extends JFrame {
                 Projectiles bullet = projectiles.get(i);
                 Rectangle bulletBorder = bullet.getBulletBorder();
 
-                for (int j = 0; j < enemies.size(); j++) {
-                    Enemy enemy = enemies.get(j);
+                for (Enemy enemy : enemies) {
                     Rectangle enemyBorder = enemy.getEnemyBorder();
 
-                    if (bulletBorder.intersects(enemyBorder)) {
+                    if (bulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
                         enemy.hit();
                         projectiles.remove(i);
                         i--;
@@ -213,20 +217,19 @@ public class GameScreen extends JFrame {
             }
 
             // check dead enemies
-            for (int i = 0; i < enemies.size(); i++) {
+            /*for (int i = 0; i < enemies.size(); i++) {
                 if (enemies.get(i).isDead()) {
                     enemies.remove(i);
                     i--;
                 }
-            }
+            }*/
 
             // enemy-player collision
-            for (int i = 0; i < enemies.size(); i++) {
-                Enemy enemy = enemies.get(i);
+            for (Enemy enemy : enemies) {
                 Rectangle enemyBorder = enemy.getEnemyBorder();
                 Rectangle playerBorder = player.getPlayerBorder();
 
-                if (enemyBorder.intersects(playerBorder) && !player.isDead()) {
+                if (enemyBorder.intersects(playerBorder) && !player.isDead() && !enemy.isDead() ) {
                     player.hit();
                 }
             }
@@ -237,39 +240,31 @@ public class GameScreen extends JFrame {
             // map draw
             gsm.draw(g);
 
-            // draw avg fps
-            averageFPS = frameCounter.getFrameRate();
-            g.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-            g.setColor(Color.WHITE);
-            g.drawString("FPS: " + averageFPS, 10, 10);
-            g.drawString("Zombie counter: " + enemies.size(), 10, 20);
-            g.drawString("Bullet counter: " + projectiles.size(), 10, 30);
+            // enemy draw
+            for (Enemy enemy : enemies) {
+                enemy.draw(g);
+            }
 
             // player draw
             player.draw(g);
+
+            // bullet draw
+            for (Projectiles projectile : projectiles) {
+                projectile.draw(g);
+            }
 
             // player health draw
             g.setFont(new Font("Century Gothic", Font.PLAIN, 12));
             g.setColor(Color.WHITE);
             g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 100, 10);
 
-            // player died
-            if(player.isDead()) {
-                g.setFont(new Font("Century Gothic", Font.BOLD, 36));
-                String str = "G A M E    O V E R   ! ! !";
-                int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
-                g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
-            }
-
-            // bullet draw
-            for (int i = 0; i < projectiles.size(); i++) {
-                projectiles.get(i).draw(g);
-            }
-
-            // enemy draw
-            for (int i = 0; i < enemies.size(); i++) {
-                enemies.get(i).draw(g);
-            }
+            // draw avg fps
+            averageFPS = frameCounter.getFrameRate();
+            g.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+            g.setColor(Color.WHITE);
+            g.drawString("FPS: " + averageFPS, 10, 10);
+            g.drawString("Zombie counter: " + deadEnemiesCounter, 10, 20);
+            g.drawString("Bullet counter: " + projectiles.size(), 10, 30);
 
             // draw wave number
             if(waveStartTimer != 0 && !gameEnded) {
@@ -281,6 +276,15 @@ public class GameScreen extends JFrame {
                     alpha = 255;
                 }
                 g.setColor(new Color(255, 255, 255, alpha));
+                g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
+            }
+
+
+            // player died
+            if(player.isDead()) {
+                g.setFont(new Font("Century Gothic", Font.BOLD, 36));
+                String str = "G A M E    O V E R   ! ! !";
+                int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
             }
 
@@ -310,8 +314,17 @@ public class GameScreen extends JFrame {
             enemies.clear();
 
             if(waveNumber <= endWaveNumber) {
-                for(int i = 0; i < defaultSpawnEnemySize * waveNumber; i++) {
-                    enemies.add(new Enemy(1));
+                if (waveNumber % 5 == 0 && waveNumber > 1) {
+                    deadEnemiesCounter = defaultSpawnEnemySize * waveNumber + 1;
+                    enemies.add(new Enemy(4));
+                    for (int i = 1; i < deadEnemiesCounter; i++) {
+                        enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
+                    }
+                } else {
+                    deadEnemiesCounter = defaultSpawnEnemySize * waveNumber;
+                    for (int i = 0; i < deadEnemiesCounter; i++) {
+                        enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
+                    }
                 }
             }
         }
@@ -379,14 +392,14 @@ public class GameScreen extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent mouseButton) {
-            if (mouseButton.getButton() == mouseButton.BUTTON1){
+            if (mouseButton.getButton() == MouseEvent.BUTTON1 && !player.isDead()){
                 player.setFiring(true);
             }
         }
 
         @Override
         public void mouseReleased(MouseEvent mouseButton) {
-            if (mouseButton.getButton() == mouseButton.BUTTON1){
+            if (mouseButton.getButton() == MouseEvent.BUTTON1){
                 player.setFiring(false);
             }
         }
