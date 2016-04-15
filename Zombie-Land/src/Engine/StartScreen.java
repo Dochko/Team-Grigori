@@ -17,7 +17,7 @@ public class StartScreen extends JFrame {
     private String windowIconPath = "Resources/IconSmall_Zombie.gif";
     private String backgroundImgPath = "Resources/startscreenBackground.jpg";
     private String cursorImgPath = "Resources/zombieHandCursor.gif";
-    private String introMusicPath = "sound/Intro.wav";
+    private String introMusicPath = "sound/Game/Intro.wav";
 
     private Sound intro;
 

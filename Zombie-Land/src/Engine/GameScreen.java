@@ -5,6 +5,7 @@ import Models.Enemy;
 import Models.Player;
 import Models.Projectiles;
 import Utilities.FrameRateCounter;
+import Utilities.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,13 @@ public class GameScreen extends JFrame {
 
     private boolean gameEnded;
 
+    //Sound
+    private Sound game_music = new Sound("sound/Game/GameMusic.wav");
+    private Sound victory_music = new Sound("sound/Game/Victory.wav");
+    private Sound defeat_music = new Sound("sound/Game/Defeat.wav");
+    private Sound player_run = new Sound("sound/Player/run-grass.wav");
+    private Sound player_shoot =new Sound("sound/Guns/ak74-shoot.wav");
+
     // JFrame constructor
     public GameScreen() {
         initComponents();
@@ -60,6 +68,8 @@ public class GameScreen extends JFrame {
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 new ImageIcon("Resources/crosshair.png").getImage(), new Point(17 / 2, 17 / 2), "custom cursor"));
         this.pack();
+
+        game_music.Loop();
     }
 
     // The main panel where the game draws itself
@@ -255,6 +265,10 @@ public class GameScreen extends JFrame {
 
             // player died
             if(player.isDead()) {
+                //sound control
+                game_music.Close();
+                defeat_music.Play();
+
                 g.setFont(new Font("Century Gothic", Font.BOLD, 36));
                 String str = "G A M E    O V E R   ! ! !";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
@@ -286,6 +300,10 @@ public class GameScreen extends JFrame {
 
             // game ending message draw
             if (gameEnded) {
+                //sound control
+                game_music.Close();
+                victory_music.PlayOnce();
+
                 g.setFont(new Font("Century Gothic", Font.PLAIN, 28));
                 String str = "YOU WON AGAINST THE ZOMBIE HORDE !!! CONGRATS !!!";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
@@ -325,6 +343,7 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent key) {
+            player_run.Play();
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(true);
             }
@@ -352,6 +371,7 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyReleased(KeyEvent key) {
+            player_run.Stop();
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(false);
             }
@@ -381,6 +401,7 @@ public class GameScreen extends JFrame {
         public void mousePressed(MouseEvent mouseButton) {
             if (mouseButton.getButton() == mouseButton.BUTTON1){
                 player.setFiring(true);
+                player_shoot.ShootLoop();
             }
         }
 
@@ -388,6 +409,7 @@ public class GameScreen extends JFrame {
         public void mouseReleased(MouseEvent mouseButton) {
             if (mouseButton.getButton() == mouseButton.BUTTON1){
                 player.setFiring(false);
+                player_shoot.Stop();
             }
         }
 
