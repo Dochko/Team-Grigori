@@ -272,6 +272,7 @@ public class GameScreen extends JFrame {
             if(player.isDead()) {
                 //sound control
                 game_music.Close();
+                defeat_music.setVolumeUp(5f);
                 defeat_music.Play();
 
                 g.setFont(new Font("Century Gothic", Font.BOLD, 36));
@@ -406,6 +407,7 @@ public class GameScreen extends JFrame {
         public void mousePressed(MouseEvent mouseButton) {
             if (mouseButton.getButton() == MouseEvent.BUTTON1 && !player.isDead()){
                 player.setFiring(true);
+                player_shoot.setVolumeDown(20f);
                 player_shoot.ShootLoop();
             }
         }

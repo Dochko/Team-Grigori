@@ -9,6 +9,7 @@ public class Sound {
 
     private AudioInputStream ais;
     private Clip clip;
+    private FloatControl gainControl;
 
     public Sound(String path) {
         try {
@@ -18,6 +19,18 @@ public class Sound {
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setVolumeDown(float vol){
+        gainControl =
+                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-vol);
+    }
+
+    public void setVolumeUp(float vol){
+        gainControl =
+                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(vol);
     }
 
     public void Play() {
