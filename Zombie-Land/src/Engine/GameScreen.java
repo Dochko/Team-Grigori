@@ -94,7 +94,8 @@ public class GameScreen extends JFrame {
                 }
                 gameDraw();
 
-                if (player.isDead()) {
+                if (player.isDead() && player.getAnimator()) {
+                    System.out.println("ma toi umrql ma");
                     timer.stop();
                 }
             });
@@ -158,7 +159,7 @@ public class GameScreen extends JFrame {
 
             double playerRotation = 0f;
 
-            if (point != null) {
+            if (point != null && !player.isDead()) {
                 double playerDeltaX = point.getX() - player.getX();
                 double playerDeltaY = point.getY() - player.getY();
 
@@ -225,7 +226,7 @@ public class GameScreen extends JFrame {
                 Rectangle enemyBorder = enemy.getEnemyBorder();
                 Rectangle playerBorder = player.getPlayerBorder();
 
-                if (enemyBorder.intersects(playerBorder)) {
+                if (enemyBorder.intersects(playerBorder) && !player.isDead()) {
                     player.hit();
                 }
             }

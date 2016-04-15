@@ -208,6 +208,7 @@ public class StartScreen extends JFrame {
                 button.setBackground(new Color(0, 120, 0));
                 button.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.black);
                 button.setForeground(new Color(0, 120, 0));

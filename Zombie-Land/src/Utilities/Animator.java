@@ -1,5 +1,7 @@
 package Utilities;
 
+import Engine.GameScreen;
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -26,8 +28,8 @@ public class Animator {
             if(time - this.prevTime >= this.speed) {
                 this.currentFrame++;
                 try{
-                    if(currentFrame < frames.size()) {
-                        this.sprite = this.frames.get(this.currentFrame);
+                    if(currentFrame <= frames.size()) {
+                        this.sprite = this.frames.get(this.currentFrame - 1);
                     } else {
                         this.reset();
                         this.sprite = this.frames.get(this.currentFrame);
@@ -50,6 +52,7 @@ public class Animator {
 
     public void stop() {
         this.running = false;
+        this.frames.clear();
         this.prevTime = 0;
         this.frameAtPause = 0;
         this.currentFrame = 0;
@@ -64,15 +67,15 @@ public class Animator {
         this.currentFrame = this.frameAtPause;
     }
 
-    public void reset() {
-        this.currentFrame = 0;
-    }
-
     public boolean isDoneAnimating() {
         if(this.currentFrame == this.frames.size()) {
-            return  true;
+            return true;
         } else {
             return false;
         }
+    }
+
+    private void reset() {
+        this.currentFrame = 0;
     }
 }

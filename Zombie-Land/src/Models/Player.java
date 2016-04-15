@@ -17,7 +17,8 @@ public class Player{
 
     //TODO: Test player animation init
     private ArrayList<BufferedImage> spritesMove;
-    private Animator animatorMove;
+    private ArrayList<BufferedImage> spritesDead;
+    private Animator animator;
 
     private int width;
     private int height;
@@ -46,20 +47,26 @@ public class Player{
 
     public Player() {
         this.spritesMove = new ArrayList<>();
+        this.spritesDead = new ArrayList<>();
 
         try {
             this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne0.png")));
             this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne1.png")));
             this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne2.png")));
             this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne3.png")));
+
+            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing0.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing1.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing2.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing3.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.animatorMove = new Animator(this.spritesMove);
-        this.animatorMove.setSpeed(200);
-        this.animatorMove.start();
-        animatorMove.update(System.currentTimeMillis());
+        this.animator = new Animator(this.spritesMove);
+        this.animator.setSpeed(200);
+        this.animator.start();
+        this.animator.update(System.currentTimeMillis());
 
         /*
         try {
@@ -76,8 +83,8 @@ public class Player{
         this.height = image.getHeight(null);
         */
 
-        this.width = this.animatorMove.sprite.getWidth();
-        this.height = this.animatorMove.sprite.getHeight();
+        this.width = this.animator.sprite.getWidth();
+        this.height = this.animator.sprite.getHeight();
 
 
 
@@ -87,7 +94,7 @@ public class Player{
         this.dx = 0;
         this.dy = 0;
         this.speed = 5;
-        this.health = 100;
+        this.health = 10;
         this.isDead = false;
 
         this.playerBorder = new Rectangle(this.x, this.y, this.width, this.height);
@@ -129,33 +136,49 @@ public class Player{
 
     public void setFiring(boolean b) { this.firing = b; }
 
+    public boolean getAnimator() {
+        return this.animator.isDoneAnimating();
+    }
+
     public void hit() {
         this.health -= 10f / 20f;
         if (health <= 0) {
             this.health = 0;
             this.isDead = true;
+            this.deadPlayer();
         }
     }
 
+    private void deadPlayer() {
+        this.animator = new Animator(this.spritesDead);
+        this.animator.setSpeed(200);
+        this.animator.start();
+        animator.update(System.currentTimeMillis());
+    }
+
     public void update() {
-        if (this.left) {
+        if (this.isDead()) {
+            animator.update(System.currentTimeMillis());
+        }
+
+        if (this.left && !this.isDead()) {
             this.dx = -this.speed;
-            animatorMove.update(System.currentTimeMillis());
+            animator.update(System.currentTimeMillis());
         }
 
-        if (this.right) {
+        if (this.right && !this.isDead()) {
             this.dx = this.speed;
-            animatorMove.update(System.currentTimeMillis());
+            animator.update(System.currentTimeMillis());
         }
 
-        if (this.up) {
+        if (this.up && !this.isDead()) {
             this.dy = -this.speed;
-            animatorMove.update(System.currentTimeMillis());
+            animator.update(System.currentTimeMillis());
         }
 
-        if (this.down) {
+        if (this.down && !this.isDead()) {
             this.dy = this.speed;
-            animatorMove.update(System.currentTimeMillis());
+            animator.update(System.currentTimeMillis());
         }
 
         this.x += this.dx;
@@ -190,23 +213,10 @@ public class Player{
     }
 
     public void draw(Graphics2D g) {
-        // Both methods work nearly the same way
-
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
-        g.drawImage(this.animatorMove.sprite, this.x, this.y, this.width, this.height, null);
+        g.drawImage(this.animator.sprite, this.x, this.y, this.width, this.height, null);
         g.setTransform(reset);
-
-        /*
-        AffineTransform backup = g.getTransform();
-        AffineTransform trans = new AffineTransform();
-
-        trans.rotate(Math.toRadians(this.angle), x + (image.getWidth(null) - 21), y + (image.getHeight(null) - 12));
-        g.transform(trans);
-        g.drawImage(image, x, y, null);  // the actual location of the sprite
-
-        g.setTransform(backup); // restore previous transform
-        */
     }
 }
