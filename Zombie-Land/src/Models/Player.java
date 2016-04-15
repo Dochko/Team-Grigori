@@ -97,7 +97,7 @@ public class Player{
         this.health = 100;
         this.isDead = false;
 
-        this.playerBorder = new Rectangle(this.x, this.y, this.width, this.height);
+        this.playerBorder = new Rectangle(this.x, this.y, this.width-20, this.height - 8);
     }
 
     public void setLeft(boolean b) {
@@ -196,8 +196,8 @@ public class Player{
             this.y = 0;
         }
 
-        this.playerBorder.x = this.x;
-        this.playerBorder.y = this.y;
+        this.playerBorder.x = this.x + 10;
+        this.playerBorder.y = this.y + 4;
 
         this.dx = 0;
         this.dy = 0;
@@ -217,6 +217,7 @@ public class Player{
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
         g.drawImage(this.animator.sprite, this.x, this.y, this.width, this.height, null);
+        g.draw(playerBorder);
         g.setTransform(reset);
     }
 }
