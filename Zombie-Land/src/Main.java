@@ -5,7 +5,10 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> new StartScreen().setVisible(true));
-        //TODO: Mandatory - find a way to split the sprites and create animations
-        //TODO: Optional - game map objects and obstacles; different weapons and bullets; perks or some kind of skill system
+        //TODO: DONE - Mandatory Alpha - find a way to split the sprites and create animations - DONE
+        //TODO: Mandatory Beta - Create the high score and help screens; Decide what to do with the GameState classes; Different weapons and bullets;
+        //TODO: Mandatory Beta - More maps and random map generator; Boss shooting ability and enemies optimization; More sound options and optimization;
+        //TODO: Mandatory Beta -
+        //TODO: Whats left - Perks or some kind of skill system;  game map objects and obstacles (very very very very optional);
     }
 }
