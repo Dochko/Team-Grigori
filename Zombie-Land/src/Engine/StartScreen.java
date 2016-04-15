@@ -151,27 +151,26 @@ public class StartScreen extends JFrame {
                 "Select Difficulty:", "input",
                 JOptionPane.INFORMATION_MESSAGE, null,
                 values, values[0]);*/
-        try{
-            switch ((String)choice){
-                case "Normal":
-                    intro.Stop();
-                    this.dispose();
-                    GameScreen window = new GameScreen();
-                    window.setIconImage(new ImageIcon(windowIconPath).getImage());
-                    window.setTitle(windowTitle);
-                    window.setVisible(true);
-                    break;
-                case "Medium":
-                    //TODO: Medium difficulty
-                    break;
-                case "Hard":
-                    //TODO: Hard difficulty
-                    break;
-                default:
-                    break;
-            }
-        }catch (NullPointerException ignored){
-            ignored.printStackTrace();
+        if((String)choice == null) {
+            choice = "";
+        }
+        switch ((String)choice){
+            case "Normal":
+                intro.Stop();
+                this.dispose();
+                GameScreen window = new GameScreen();
+                window.setIconImage(new ImageIcon(windowIconPath).getImage());
+                window.setTitle(windowTitle);
+                window.setVisible(true);
+                break;
+            case "Medium":
+                //TODO: Medium difficulty
+                break;
+            case "Hard":
+                //TODO: Hard difficulty
+                break;
+            default:
+                break;
         }
     }
 
