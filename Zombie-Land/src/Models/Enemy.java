@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Enemy {
-    //TODO: Enemy test animation init
     private ArrayList<BufferedImage> spritesMove;
     private ArrayList<BufferedImage> spritesDie;
     private Animator animator;
@@ -43,11 +42,6 @@ public class Enemy {
 
         // Enemy Types
         enemyTypes(type);
-
-        /*
-        this.width = image.getWidth();
-        this.height = image.getHeight();
-        */
 
         this.width = this.animator.sprite.getWidth();
         this.height = this.animator.sprite.getHeight();
@@ -84,7 +78,6 @@ public class Enemy {
         switch (type) {
             // Normal zombie
             case 1:
-                //TODO: enemy test animation
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));

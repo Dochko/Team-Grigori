@@ -12,10 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player{
-    private BufferedImage image;
-    private String path = "Resources/player.png";
-
-    //TODO: Test player animation init
     private ArrayList<BufferedImage> spritesMove;
     private ArrayList<BufferedImage> spritesDead;
     private Animator animator;
@@ -68,25 +64,8 @@ public class Player{
         this.animator.start();
         this.animator.update(System.currentTimeMillis());
 
-        /*
-        try {
-            image = ImageIO.read(new File(this.path));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-
-
-        //TODO: test player animation
-        /*
-        this.width = image.getWidth(null);
-        this.height = image.getHeight(null);
-        */
-
         this.width = this.animator.sprite.getWidth();
         this.height = this.animator.sprite.getHeight();
-
-
 
         this.x = GameScreen.WIDTH / 2;
         this.y = GameScreen.HEIGHT / 2;
