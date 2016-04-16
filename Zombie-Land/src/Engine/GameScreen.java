@@ -30,7 +30,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 120;
+    private int FPS = 1000 / 30;
     private int averageFPS;
 
     public static Player player;
@@ -51,6 +51,9 @@ public class GameScreen extends JFrame {
     public static int difficult;
 
     private boolean gameEnded;
+
+    //Health Bar
+    private Rectangle healthBar = new Rectangle(WIDTH - 210, 10,200 ,20);
 
     //Sound
     private Sound game_music = new Sound("sound/Game/GameMusic.wav");
@@ -272,6 +275,7 @@ public class GameScreen extends JFrame {
 
                 if (enemyBorder.intersects(playerBorder) && !player.isDead() && !enemy.isDead() ) {
                     player.hit();
+                    healthBar.width = player.getHealth() * 2;
                 }
             }
         }
@@ -377,9 +381,14 @@ public class GameScreen extends JFrame {
             }
 
             // player health draw
-            g.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+            g.setColor(new Color(255,0,0,127));
+            g.fill(healthBar);
+            g.setColor(Color.BLACK);
+            g.draw(healthBar);
+
+            g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
             g.setColor(Color.WHITE);
-            g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 100, 10);
+            g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 140, 25);
 
             // draw avg fps
             averageFPS = frameCounter.getFrameRate();
