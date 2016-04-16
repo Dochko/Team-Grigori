@@ -27,6 +27,7 @@ public class StartScreen extends JFrame {
     private JButton highScoreButton;
     private JButton helpButton;
     private JButton exitButton;
+    private JPanel helpPane;
 
     public StartScreen() {
         initComponents();
@@ -181,9 +182,52 @@ public class StartScreen extends JFrame {
     }
 
     private void helpScreen(ActionEvent evt) {
-        //this.setVisible(false);
-        //TODO: help screen
-        //dispose();
+        String helpBackgroundPath = "Resources/emptyScreen.jpg";
+        ImageHandler ih = new ImageHandler(this);
+        Image img = ih.loadImage(helpBackgroundPath);
+        helpPane = new BackgroundImageComponent(img);;
+        JButton helpOk =  new JButton();
+        JLabel helpLabel = new JLabel();
+        helpLabel.setBounds(200, 10, 600, 400);
+        helpLabel.setFont(new Font("MV Boli", Font.PLAIN, 14));
+        helpLabel.setForeground(new Color(0, 120, 0));
+        helpLabel.setText(helpText());
+        helpOk.setBackground(new Color(0, 0, 0));
+        helpOk.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        helpOk.setForeground(new Color(0, 120, 0));
+        helpOk.setFocusable(true);
+        helpOk.setBorderPainted(false);
+        helpOk.setText("Back");
+        helpOk.setBounds(630, 450, 150, 50);
+        helpOk.addActionListener(this::helpOkActionPerformed);
+        HoverEvent(helpOk);
+        helpPane.add(helpLabel);
+        helpPane.add(helpOk);
+        helpPane.setLayout(null);
+        helpPane.setVisible(true);
+        gameStartPanel.setVisible(false);
+        setContentPane(helpPane);
+    }
+
+    private String helpText() {
+        String helpText;
+        helpText = "<html>Welcome to the Z O M B I E - L A N D <br><br>" +
+                "          What you play:<br>" +
+                "You are merciless hunter who has ended in a dieing World <br>" +
+                "filled with deadly disease, which turns everyone that got a <br>" +
+                "contact to a fierce Zombie, which is hungry for human Brains.<br>" +
+                "Your task is to eliminate all threats and survive the Apocalypse.<br><br>" +
+                "          Button configuration:<br>" +
+                "1.\"W, S, D, A\" - Move commands.<br>" +
+                "2.\"Mouse Left Click\" - Fire.<br>" +
+                "<br>Good Luck in your endeavour.</html>";
+        return helpText;
+    }
+
+    private void helpOkActionPerformed(ActionEvent actionEvent) {
+        helpPane.setVisible(false);
+        gameStartPanel.setVisible(true);
+        setContentPane(gameStartPanel);
     }
 
     private void exitActionPerformed(ActionEvent evt) {
