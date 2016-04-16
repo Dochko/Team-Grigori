@@ -5,6 +5,7 @@ import Models.Enemy;
 import Models.Player;
 import Models.Projectiles;
 import Utilities.FrameRateCounter;
+import Utilities.HighScoreTemplate;
 import Utilities.Sound;
 
 import javax.swing.*;
@@ -116,7 +117,13 @@ public class GameScreen extends JFrame {
                 if (player.isDead() && player.getAnimator()) {
 
                     timer.stop();
+                    try{
+                        checkHighScore(gameScore);
+                    }catch (IOException | ClassNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
                     enemies.clear();
+
                 }
             });
 
@@ -151,7 +158,6 @@ public class GameScreen extends JFrame {
 
             // new enemy wave logic
             if(waveNumber > endWaveNumber) {
-                checkHighScore(gameScore);
                 gameEnded = true;
             }
 
@@ -247,16 +253,32 @@ public class GameScreen extends JFrame {
 
         private void checkHighScore(int gameScore) throws IOException, ClassNotFoundException  {
             boolean check = true;
-            ArrayList<Integer> newInts = new ArrayList<>();
+            boolean done = false;
+            HighScoreTemplate newScore = new HighScoreTemplate("", waveNumber, gameScore);
+            ArrayList<HighScoreTemplate> newInts = new ArrayList<>();
             File file = new File("Resources/HighScore/highScore.hs");
-            ArrayList<Integer> ints = readFromFile(file);
+            ArrayList<HighScoreTemplate> ints = readFromFile(file);
+            JOptionPane optionPane = new JOptionPane();
+            optionPane.setBounds(500, 400, 200, 200);
+            JDialog dialog = new JDialog();
+            dialog.setTitle("High Score achieved");
+            dialog.setVisible(true);
+            dialog.dispose();
             if(ints != null) {
                 check = false;
-                for (Integer anInt : ints) {
-                    if (gameScore >= anInt) {
-                        newInts.add(gameScore);
+                for (HighScoreTemplate anInt : ints) {
+                    if(newInts.size() == 10){
+                        break;
+                    }
+                    if (gameScore >= anInt.getScore()) {
+                        done = true;
+                        String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
+                        newScore.setName(name);
+                        newInts.add(newScore);
+                        if(newInts.size() < 10){
+                            newInts.add(anInt);
+                        }
                         check = true;
-                        GameScreen.gameScore = 0;
                         gameScore = -1;
                     } else {
                         newInts.add(anInt);
@@ -264,8 +286,10 @@ public class GameScreen extends JFrame {
                 }
             }
             if (check){
-                if(newInts.size() == 0){
-                    newInts.add(gameScore);
+                if(newInts.size() == 0 || (newInts.size() < 10 && !done)){
+                    String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
+                    newScore.setName(name);
+                    newInts.add(newScore);
                 }
                 file = new File("Resources/HighScore/highScore.hs");
                 writeToFile(newInts, file);
@@ -344,11 +368,12 @@ public class GameScreen extends JFrame {
                 String str = "G A M E    O V E R   ! ! !";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
-                try{
-                    checkHighScore(gameScore);
-                }catch (IOException | ClassNotFoundException e){
-                    System.out.println(e.getMessage());
-                }
+
+                g.setFont(new Font("Century Gothic", Font.PLAIN, 26));
+                str = "press ESC to go back to Menu.";
+                length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
+                g.drawString(str, GameScreen.WIDTH / 2 - length / 2, (GameScreen.HEIGHT / 2) + 50);
+
             }
 
             // draw wave number
@@ -375,6 +400,11 @@ public class GameScreen extends JFrame {
                 String str = "YOU WON AGAINST THE ZOMBIE HORDE !!! CONGRATS !!!";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
+                try{
+                    checkHighScore(gameScore);
+                }catch (IOException | ClassNotFoundException e){
+                    System.out.println(e.getMessage());
+                }
             }
         }
 

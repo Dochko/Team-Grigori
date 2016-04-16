@@ -1,16 +1,14 @@
 package Engine;
 
 import Utilities.BackgroundImageComponent;
+import Utilities.HighScoreTemplate;
 import Utilities.ImageHandler;
 import Utilities.Sound;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 
@@ -34,6 +32,7 @@ public class StartScreen extends JFrame {
     private JButton exitButton;
     private JPanel helpPane;
     private JPanel highScorePane;
+    JLabel highScoreLabel;
 
     public StartScreen() {
         initComponents();
@@ -188,7 +187,7 @@ public class StartScreen extends JFrame {
         highScorePane = new BackgroundImageComponent(img);;
         JButton highScoreOk =  new JButton();
         JButton highScoreReset =  new JButton();
-        JLabel highScoreLabel = new JLabel();
+        highScoreLabel = new JLabel();
         highScoreLabel.setBounds(200, 0, 600, 400);
         highScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 14));
         highScoreLabel.setForeground(new Color(0, 120, 0));
@@ -232,16 +231,21 @@ public class StartScreen extends JFrame {
     private String HighScoreText() throws IOException, ClassNotFoundException {
         FileInputStream fin;
         ObjectInputStream in;
-        fin = new FileInputStream("Resources/HighScore/highScore.hs");
-        in = new ObjectInputStream(fin);
-        ArrayList<Integer> ints;
-        ints = (ArrayList<Integer>) in.readObject();
-        in.close();
-        String high = "";
+        File file = new File("Resources/HighScore/highScore.hs");
         int i = 1;
-        for (Integer anInt : ints) {
-            high += i + ". " + anInt + "<br>";
-            i++;
+        String high = "";
+        if(file.exists()) {
+            fin = new FileInputStream(file);
+            in = new ObjectInputStream(fin);
+            ArrayList<HighScoreTemplate> ints;
+            ints = (ArrayList<HighScoreTemplate>) in.readObject();
+            in.close();
+            for (HighScoreTemplate anInt : ints) {
+                high += i + ". " + anInt.getName() + ", " +
+                        anInt.getWave() + " wave, " +
+                        anInt.getScore() + " Points<br>";
+                i++;
+            }
         }
         for (int j = i ; j < 11; j++) {
             high += j + ". <br>";
@@ -253,6 +257,13 @@ public class StartScreen extends JFrame {
     }
 
     private void highScoreResetActionPerformed(ActionEvent actionEvent) {
+        File file = new File("Resources/HighScore/highScore.hs");
+        file.delete();
+        try{
+            highScoreLabel.setText(HighScoreText());
+        }catch (IOException | ClassNotFoundException e ){
+        }
+        setContentPane(highScorePane);
     }
 
     private void highScoreOkActionPerformed(ActionEvent actionEvent) {
