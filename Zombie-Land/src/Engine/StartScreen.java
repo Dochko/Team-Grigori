@@ -160,24 +160,28 @@ public class StartScreen extends JFrame {
         if(choice == null) {
             choice = "";
         }
+        GameScreen window = new GameScreen();
         switch ((String)choice){
             case "Normal":
-                intro.Stop();
-                this.dispose();
-                GameScreen window = new GameScreen();
-                window.setIconImage(new ImageIcon(windowIconPath).getImage());
-                window.setTitle(windowTitle);
-                window.setVisible(true);
+
+                GameScreen.difficult = 1;
                 break;
             case "Medium":
                 //TODO: Medium difficulty
+                GameScreen.difficult = 2;
                 break;
             case "Hard":
                 //TODO: Hard difficulty
+                GameScreen.difficult = 3;
                 break;
             default:
                 break;
         }
+        intro.Stop();
+        this.dispose();
+        window.setIconImage(new ImageIcon(windowIconPath).getImage());
+        window.setTitle(windowTitle);
+        window.setVisible(true);
     }
 
     private void highScoreScreen(ActionEvent evt){

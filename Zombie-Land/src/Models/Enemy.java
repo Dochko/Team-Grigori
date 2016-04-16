@@ -126,8 +126,8 @@ public class Enemy {
                 }
 
                 this.speed = 5;
-                this.health = 2;
-                this.pointsWorth = 15;
+                this.health = 2 * GameScreen.difficult;
+                this.pointsWorth = 15 * GameScreen.difficult;
                 break;
             case 3:
                 try {
@@ -151,8 +151,8 @@ public class Enemy {
                 }
 
                 this.speed = 3;
-                this.health = 4;
-                this.pointsWorth = 10;
+                this.health = 4 * GameScreen.difficult;
+                this.pointsWorth = 10 * GameScreen.difficult;
                 break;
             case 4:
                 try {
@@ -176,8 +176,8 @@ public class Enemy {
                 }
 
                 this.speed = 2;
-                this.health = 20;
-                this.pointsWorth = 25;
+                this.health = 20 * GameScreen.difficult;
+                this.pointsWorth = 25 * GameScreen.difficult;
                 break;
             default:
                 break;

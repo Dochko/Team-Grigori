@@ -37,6 +37,7 @@ public class GameScreen extends JFrame {
     public static ArrayList<Projectiles> projectiles;
     public static ArrayList<Enemy> enemies;
 
+
     private boolean waveStart; // pause between waves
     private long waveStartTimer; // the starting time of the wave
     private long waveStartTimerDiff; // this starts the wave after the delay we set it
@@ -46,6 +47,7 @@ public class GameScreen extends JFrame {
     private int endWaveNumber = 5;
     public static int deadEnemiesCounter;
     public static int gameScore = 0;
+    public static int difficult;
 
     private boolean gameEnded;
 
@@ -102,9 +104,7 @@ public class GameScreen extends JFrame {
 
                 try {
                     gameUpdate();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
                 try {
@@ -432,13 +432,15 @@ public class GameScreen extends JFrame {
 
             if(waveNumber <= endWaveNumber) {
                 if (waveNumber % 5 == 0 && waveNumber > 1) {
-                    deadEnemiesCounter = defaultSpawnEnemySize * waveNumber + 1;
-                    enemies.add(new Enemy(4));
+                    deadEnemiesCounter = (defaultSpawnEnemySize * waveNumber + 1) * GameScreen.difficult;
+                    for (int i = 0; i < GameScreen.difficult; i++) {
+                        enemies.add(new Enemy(4));
+                    }
                     for (int i = 1; i < deadEnemiesCounter; i++) {
                         enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
                     }
                 } else {
-                    deadEnemiesCounter = defaultSpawnEnemySize * waveNumber;
+                    deadEnemiesCounter = (defaultSpawnEnemySize * waveNumber) * GameScreen.difficult;
                     for (int i = 0; i < deadEnemiesCounter; i++) {
                         enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
                     }
