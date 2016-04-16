@@ -43,6 +43,7 @@ public class Sound {
         this.clip.start();
     }
 
+
     public void Stop(){
         this.clip.stop();
         this.clip.setFramePosition(0);

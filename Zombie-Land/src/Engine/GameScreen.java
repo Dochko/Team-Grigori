@@ -61,6 +61,7 @@ public class GameScreen extends JFrame {
     private Sound defeat_music = new Sound("sound/Game/Defeat.wav");
     private Sound player_run = new Sound("sound/Player/run-grass.wav");
     private Sound player_shoot =new Sound("sound/Guns/ak74-shoot.wav");
+    private Sound zombie_eat = new Sound("sound/Zombies/zombie-eating.wav");
 
     // JFrame constructor
     public GameScreen() {
@@ -276,6 +277,10 @@ public class GameScreen extends JFrame {
                 if (enemyBorder.intersects(playerBorder) && !player.isDead() && !enemy.isDead() ) {
                     player.hit();
                     healthBar.width = player.getHealth() * 2;
+
+                    //Sound effects
+                    zombie_eat.setVolumeDown(10f);
+                    zombie_eat.Play();
                 }
             }
         }
@@ -367,6 +372,11 @@ public class GameScreen extends JFrame {
                 enemy.draw(g);
             }
 
+            // enemy bullet draw
+            for (Projectiles enemyProjectile : enemyProjectiles) {
+                enemyProjectile.draw(g);
+            }
+
             // player draw
             player.draw(g);
 
@@ -375,10 +385,6 @@ public class GameScreen extends JFrame {
                 projectile.draw(g);
             }
 
-            // enemy bullet draw
-            for (Projectiles enemyProjectile : enemyProjectiles) {
-                enemyProjectile.draw(g);
-            }
 
             // player health draw
             g.setColor(new Color(255,0,0,127));
@@ -390,7 +396,7 @@ public class GameScreen extends JFrame {
             g.setColor(Color.WHITE);
             g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 140, 25);
 
-            // draw avg fps
+            // draw avg fps and other information
             averageFPS = frameCounter.getFrameRate();
             g.setFont(new Font("Century Gothic", Font.PLAIN, 12));
             g.setColor(Color.WHITE);
@@ -403,7 +409,10 @@ public class GameScreen extends JFrame {
             if(player.isDead()) {
                 //sound control
                 game_music.Close();
-                defeat_music.setVolumeUp(5f);
+                player_shoot.Close();
+                player_run.Close();
+                zombie_eat.Close();
+                defeat_music.setVolumeUp(4f);
                 defeat_music.Play();
 
                 g.setFont(new Font("Century Gothic", Font.BOLD, 36));
@@ -499,7 +508,9 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent key) {
+
             player_run.Play();
+
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(true);
             }
@@ -517,6 +528,7 @@ public class GameScreen extends JFrame {
             }
 
             if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                game_music.Close();
                 setVisible(false);
                 timer.stop();
                 dispose();
@@ -557,7 +569,7 @@ public class GameScreen extends JFrame {
         public void mousePressed(MouseEvent mouseButton) {
             if (mouseButton.getButton() == MouseEvent.BUTTON1 && !player.isDead()){
                 player.setFiring(true);
-                player_shoot.setVolumeDown(20f);
+                player_shoot.setVolumeDown(15f);
                 player_shoot.ShootLoop();
             }
         }

@@ -10,7 +10,6 @@ import java.io.File;
 
 public class Projectiles {
     private BufferedImage image;
-    private String path = "Resources/bullet.png";
 
     private int width;
     private int height;
@@ -26,9 +25,9 @@ public class Projectiles {
     private double angle;
     private double speed;
 
-    public Projectiles(double angle, int x, int y) {
+    public Projectiles(double angle, int x, int y, String path) {
         try {
-            this.image = ImageIO.read(new File(this.path));
+            this.image = ImageIO.read(new File(path));
         } catch (Exception e) {
             e.printStackTrace();
         }
