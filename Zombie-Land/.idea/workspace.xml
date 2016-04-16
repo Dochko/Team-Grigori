@@ -25,8 +25,8 @@
       <file leaf-file-name="GameScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Engine/GameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="292" column="17" selection-start-line="292" selection-start-column="17" selection-end-line="292" selection-end-column="17" />
+            <state relative-caret-position="204">
+              <caret line="403" column="70" selection-start-line="403" selection-start-column="70" selection-end-line="403" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -1028,8 +1028,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Engine/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="292" column="17" selection-start-line="292" selection-start-column="17" selection-end-line="292" selection-end-column="17" />
+        <state relative-caret-position="204">
+          <caret line="403" column="70" selection-start-line="403" selection-start-column="70" selection-end-line="403" selection-end-column="70" />
           <folding />
         </state>
       </provider>

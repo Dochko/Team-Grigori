@@ -400,6 +400,12 @@ public class GameScreen extends JFrame {
                 String str = "YOU WON AGAINST THE ZOMBIE HORDE !!! CONGRATS !!!";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
+
+                g.setFont(new Font("Century Gothic", Font.PLAIN, 26));
+                str = "press ESC to go back to Menu.";
+                length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
+                g.drawString(str, GameScreen.WIDTH / 2 - length / 2, (GameScreen.HEIGHT / 2) + 50);
+
                 try{
                     checkHighScore(gameScore);
                 }catch (IOException | ClassNotFoundException e){
