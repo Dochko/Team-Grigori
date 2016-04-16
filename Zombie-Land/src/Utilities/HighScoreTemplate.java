@@ -2,9 +2,6 @@ package Utilities;
 
 import java.io.Serializable;
 
-/**
- * Created by Yani on 16.4.2016 г..
- */
 public class HighScoreTemplate implements Serializable{
     private String name;
     private int wave;

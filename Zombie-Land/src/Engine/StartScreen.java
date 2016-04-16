@@ -153,17 +153,13 @@ public class StartScreen extends JFrame {
         dialog.setCursor(this.getCursor());
         dialog.setVisible(true);
         Object choice = pane.getValue();
-        /*Object choice = JOptionPane.showInputDialog(null,
-                "Select Difficulty:", "input",
-                JOptionPane.INFORMATION_MESSAGE, null,
-                values, values[0]);*/
         if(choice == null) {
             choice = "";
         }
+
         GameScreen window = new GameScreen();
         switch ((String)choice){
             case "Normal":
-
                 GameScreen.difficult = 1;
                 break;
             case "Medium":
@@ -177,11 +173,14 @@ public class StartScreen extends JFrame {
             default:
                 break;
         }
-        intro.Stop();
-        this.dispose();
-        window.setIconImage(new ImageIcon(windowIconPath).getImage());
-        window.setTitle(windowTitle);
-        window.setVisible(true);
+
+        if (!choice.equals("")) {
+            intro.Stop();
+            this.dispose();
+            window.setIconImage(new ImageIcon(windowIconPath).getImage());
+            window.setTitle(windowTitle);
+            window.setVisible(true);
+        }
     }
 
     private void highScoreScreen(ActionEvent evt){
@@ -225,11 +224,6 @@ public class StartScreen extends JFrame {
         highScorePane.setVisible(true);
         gameStartPanel.setVisible(false);
         setContentPane(highScorePane);
-
-
-        //this.setVisible(false);
-        // TODO: high score screen
-        //dispose();
     }
 
     private String HighScoreText() throws IOException, ClassNotFoundException {
@@ -307,10 +301,10 @@ public class StartScreen extends JFrame {
     private String helpText() {
         String helpText;
         helpText = "<html>Welcome to the Z O M B I E - L A N D <br><br>" +
-                "&#9What you play:<br>" +
+                "&#9What you are going to play:<br>" +
                 "You are merciless hunter who has ended in a dieing World <br>" +
-                "filled with deadly disease, which turns everyone that got a <br>" +
-                "contact to a fierce Zombie, which is hungry for human Brains.<br>" +
+                "filled with deadly disease and turns everyone that had <br>" +
+                "contact with it to a mutated creature, which is hungry for flesh.<br>" +
                 "Your task is to eliminate all threats and survive the Apocalypse.<br><br>" +
                 "&#9Button configuration:<br>" +
                 "1.\"W, S, D, A\" - Move commands.<br>" +

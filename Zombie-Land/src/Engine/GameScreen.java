@@ -30,11 +30,12 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 30;
+    private int FPS = 1000 / 120;
     private int averageFPS;
 
     public static Player player;
     public static ArrayList<Projectiles> projectiles;
+    public static ArrayList<Projectiles> enemyProjectiles;
     public static ArrayList<Enemy> enemies;
 
 
@@ -141,12 +142,13 @@ public class GameScreen extends JFrame {
             gsm = new GameStateManager();
             player = new Player();
             projectiles = new ArrayList<>();
+            enemyProjectiles = new ArrayList<>();
             enemies = new ArrayList<>();
 
             waveStartTimer = 0;
             waveStartTimerDiff = 0;
             waveStart = true;
-            waveNumber = 0;
+            waveNumber = 4;
 
             gameEnded = false;
         }
@@ -205,6 +207,15 @@ public class GameScreen extends JFrame {
                 }
             }
 
+            // enemy bullets update
+            for (int i = 0; i < enemyProjectiles.size(); i++) {
+                boolean remove = enemyProjectiles.get(i).update();
+                if (remove) {
+                    enemyProjectiles.remove(i);
+                    i--;
+                }
+            }
+
             // enemy update
             double enemyRotation = 0f;
             for (Enemy enemy1 : enemies) {
@@ -226,17 +237,31 @@ public class GameScreen extends JFrame {
             // bullet-enemy collision
             for (int i = 0; i < projectiles.size(); i++) {
                 Projectiles bullet = projectiles.get(i);
-                Rectangle bulletBorder = bullet.getBulletBorder();
+                Rectangle playerBulletBorder = bullet.getBulletBorder();
 
                 for (Enemy enemy : enemies) {
                     Rectangle enemyBorder = enemy.getEnemyBorder();
 
-                    if (bulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
+                    if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
                         enemy.hit();
                         projectiles.remove(i);
                         i--;
                         break;
                     }
+                }
+            }
+
+            // bullet-player collision
+            for (int i = 0; i < enemyProjectiles.size(); i++) {
+                Projectiles enemyBullet = enemyProjectiles.get(i);
+                Rectangle bossBulletBorder = enemyBullet.getBulletBorder();
+                Rectangle playerBorder = player.getPlayerBorder();
+
+                if (bossBulletBorder.intersects(playerBorder) && !player.isDead()) {
+                    player.hit();
+                    enemyProjectiles.remove(i);
+                    i--;
+                    break;
                 }
             }
 
@@ -251,6 +276,7 @@ public class GameScreen extends JFrame {
             }
         }
 
+        // Checking the player high score and compare it with the others
         private void checkHighScore(int gameScore) throws IOException, ClassNotFoundException  {
             boolean check = true;
             boolean done = false;
@@ -270,6 +296,7 @@ public class GameScreen extends JFrame {
                     if(newInts.size() == 10){
                         break;
                     }
+
                     if (gameScore >= anInt.getScore()) {
                         done = true;
                         String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
@@ -278,6 +305,7 @@ public class GameScreen extends JFrame {
                         if(newInts.size() < 10){
                             newInts.add(anInt);
                         }
+
                         check = true;
                         gameScore = -1;
                     } else {
@@ -285,6 +313,7 @@ public class GameScreen extends JFrame {
                     }
                 }
             }
+
             if (check){
                 if(newInts.size() == 0 || (newInts.size() < 10 && !done)){
                     String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
@@ -295,7 +324,6 @@ public class GameScreen extends JFrame {
                 writeToFile(newInts, file);
 
             }
-
         }
 
         private void writeToFile(ArrayList info, File file) throws IOException {
@@ -338,9 +366,14 @@ public class GameScreen extends JFrame {
             // player draw
             player.draw(g);
 
-            // bullet draw
+            // player bullet draw
             for (Projectiles projectile : projectiles) {
                 projectile.draw(g);
+            }
+
+            // enemy bullet draw
+            for (Projectiles enemyProjectile : enemyProjectiles) {
+                enemyProjectile.draw(g);
             }
 
             // player health draw
@@ -432,7 +465,7 @@ public class GameScreen extends JFrame {
 
             if(waveNumber <= endWaveNumber) {
                 if (waveNumber % 5 == 0 && waveNumber > 1) {
-                    deadEnemiesCounter = (defaultSpawnEnemySize * waveNumber + 1) * GameScreen.difficult;
+                    deadEnemiesCounter = ((defaultSpawnEnemySize * waveNumber + 1) / 2) * GameScreen.difficult;
                     for (int i = 0; i < (waveNumber / 5) * GameScreen.difficult; i++) {
                         enemies.add(new Enemy(4));
                     }

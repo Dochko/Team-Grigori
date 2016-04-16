@@ -33,6 +33,9 @@ public class Enemy {
     private int type;
     private int pointsWorth;
 
+    private long bossFiringTimer = System.nanoTime();
+    private long bossFiringDelay = 500; // firing speed
+
     private boolean isReady;
     private boolean isDead;
 
@@ -241,6 +244,15 @@ public class Enemy {
 
             this.enemyBorder.x = this.x;
             this.enemyBorder.y = this.y;
+
+            if(this.type == 4) {
+                int random = (int)((Math.random() * 11) -8);
+                long elapsed = (System.nanoTime() - this.bossFiringTimer) / 1000000;
+                if(elapsed > this.bossFiringDelay) {
+                    GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x + (this.width / 2), y + (this.height / 2)));
+                    bossFiringTimer = System.nanoTime();
+                }
+            }
         }else{
             if(animator.isDoneAnimating()){
                 animator.pause();
