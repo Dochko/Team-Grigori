@@ -28,6 +28,7 @@ public class StartScreen extends JFrame {
     private JButton helpButton;
     private JButton exitButton;
     private JPanel helpPane;
+    private JPanel highScorePane;
 
     public StartScreen() {
         initComponents();
@@ -176,9 +177,73 @@ public class StartScreen extends JFrame {
     }
 
     private void highScoreScreen(ActionEvent evt) {
+        String helpBackgroundPath = "Resources/emptyScreen.jpg";
+        ImageHandler ih = new ImageHandler(this);
+        Image img = ih.loadImage(helpBackgroundPath);
+        highScorePane = new BackgroundImageComponent(img);;
+        JButton highScoreOk =  new JButton();
+        JButton highScoreReset =  new JButton();
+        JLabel highScoreLabel = new JLabel();
+        highScoreLabel.setBounds(200, 0, 600, 400);
+        highScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 14));
+        highScoreLabel.setForeground(new Color(0, 120, 0));
+        highScoreLabel.setText(HighScoreText());
+        highScoreReset.setBackground(new Color(0, 0, 0));
+        highScoreReset.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        highScoreReset.setForeground(new Color(0, 120, 0));
+        highScoreReset.setFocusable(false);
+        highScoreReset.setBorderPainted(false);
+        highScoreReset.setText("Reset");
+        highScoreReset.setBounds(630, 380, 150, 50);
+        highScoreReset.addActionListener(this::highScoreResetActionPerformed);
+        highScoreOk.setBackground(new Color(0, 0, 0));
+        highScoreOk.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        highScoreOk.setForeground(new Color(0, 120, 0));
+        highScoreOk.setFocusable(false);
+        highScoreOk.setBorderPainted(false);
+        highScoreOk.setText("Back");
+        highScoreOk.setBounds(630, 450, 150, 50);
+        highScoreOk.addActionListener(this::highScoreOkActionPerformed);
+        HoverEvent(highScoreReset);
+        HoverEvent(highScoreOk);
+        highScorePane.add(highScoreReset);
+        highScorePane.add(highScoreLabel);
+        highScorePane.add(highScoreOk);
+        highScorePane.setLayout(null);
+        highScorePane.setVisible(true);
+        gameStartPanel.setVisible(false);
+        setContentPane(highScorePane);
+
+
         //this.setVisible(false);
         // TODO: high score screen
         //dispose();
+    }
+
+    private String HighScoreText() {
+        String highScoreText;
+        highScoreText = "<html>Welcome to the Z O M B I E - L A N D <br><br>" +
+                "&#9High Scores:<br>" +
+                "1.<br>" +
+                "2.<br>" +
+                "3.<br>" +
+                "4.<br>" +
+                "5.<br>" +
+                "6.<br>" +
+                "7.<br>" +
+                "8.<br>" +
+                "9.<br>" +
+                "10.";
+        return highScoreText;
+    }
+
+    private void highScoreResetActionPerformed(ActionEvent actionEvent) {
+    }
+
+    private void highScoreOkActionPerformed(ActionEvent actionEvent) {
+        highScorePane.setVisible(false);
+        gameStartPanel.setVisible(true);
+        setContentPane(gameStartPanel);
     }
 
     private void helpScreen(ActionEvent evt) {
@@ -212,12 +277,12 @@ public class StartScreen extends JFrame {
     private String helpText() {
         String helpText;
         helpText = "<html>Welcome to the Z O M B I E - L A N D <br><br>" +
-                "          What you play:<br>" +
+                "&#9What you play:<br>" +
                 "You are merciless hunter who has ended in a dieing World <br>" +
                 "filled with deadly disease, which turns everyone that got a <br>" +
                 "contact to a fierce Zombie, which is hungry for human Brains.<br>" +
                 "Your task is to eliminate all threats and survive the Apocalypse.<br><br>" +
-                "          Button configuration:<br>" +
+                "&#9Button configuration:<br>" +
                 "1.\"W, S, D, A\" - Move commands.<br>" +
                 "2.\"Mouse Left Click\" - Fire.<br>" +
                 "<br>Good Luck in your endeavour.</html>";
