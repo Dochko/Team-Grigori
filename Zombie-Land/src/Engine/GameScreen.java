@@ -44,7 +44,7 @@ public class GameScreen extends JFrame {
     private int waveDelay = 2000; // wave start delay
     private int waveNumber;
     private int defaultSpawnEnemySize = 10;
-    private int endWaveNumber = 5;
+    private int endWaveNumber = 25;
     public static int deadEnemiesCounter;
     public static int gameScore = 0;
     public static int difficult;
@@ -433,7 +433,7 @@ public class GameScreen extends JFrame {
             if(waveNumber <= endWaveNumber) {
                 if (waveNumber % 5 == 0 && waveNumber > 1) {
                     deadEnemiesCounter = (defaultSpawnEnemySize * waveNumber + 1) * GameScreen.difficult;
-                    for (int i = 0; i < GameScreen.difficult; i++) {
+                    for (int i = 0; i < (waveNumber / 5) * GameScreen.difficult; i++) {
                         enemies.add(new Enemy(4));
                     }
                     for (int i = 1; i < deadEnemiesCounter; i++) {
