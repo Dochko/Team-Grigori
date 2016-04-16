@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,6 +44,7 @@ public class GameScreen extends JFrame {
     private int defaultSpawnEnemySize = 10;
     private int endWaveNumber = 5;
     public static int deadEnemiesCounter;
+    public static int gameScore = 0;
 
     private boolean gameEnded;
 
@@ -98,7 +99,13 @@ public class GameScreen extends JFrame {
             timer = new Timer(FPS, event -> {
                 frameCounter.submitReading();
 
-                gameUpdate();
+                try {
+                    gameUpdate();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
                 try {
                     gameRender();
                 } catch (IOException e) {
@@ -138,12 +145,13 @@ public class GameScreen extends JFrame {
         }
 
         // This update every object in the game.
-        private void gameUpdate() {
+        private void gameUpdate() throws IOException, ClassNotFoundException {
             // map update
             gsm.update();
 
             // new enemy wave logic
             if(waveNumber > endWaveNumber) {
+                checkHighScore(gameScore);
                 gameEnded = true;
             }
 
@@ -237,6 +245,62 @@ public class GameScreen extends JFrame {
             }
         }
 
+        private void checkHighScore(int gameScore) throws IOException, ClassNotFoundException  {
+            boolean check = true;
+            ArrayList<Integer> newInts = new ArrayList<>();
+            File file = new File("Resources/HighScore/highScore.hs");
+            ArrayList<Integer> ints = readFromFile(file);
+            if(ints != null) {
+                check = false;
+                for (Integer anInt : ints) {
+                    if (gameScore >= anInt) {
+                        newInts.add(gameScore);
+                        check = true;
+                        GameScreen.gameScore = 0;
+                        gameScore = -1;
+                    } else {
+                        newInts.add(anInt);
+                    }
+                }
+            }
+            if (check){
+                if(newInts.size() == 0){
+                    newInts.add(gameScore);
+                }
+                file = new File("Resources/HighScore/highScore.hs");
+                writeToFile(newInts, file);
+
+            }
+
+        }
+
+        private void writeToFile(ArrayList info, File file) throws IOException {
+            FileOutputStream fout;
+            ObjectOutputStream oos;
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            fout = new FileOutputStream(file, false);
+            oos = new ObjectOutputStream(fout);
+            oos.writeObject(info);
+            oos.close();
+
+        }
+
+        private ArrayList readFromFile(File file) throws IOException, ClassNotFoundException {
+            FileInputStream fin;
+            ObjectInputStream in;
+            if(!file.exists()) {
+                return null;
+            }
+            fin = new FileInputStream(file);
+            in = new ObjectInputStream(fin);
+            ArrayList info;
+            info = (ArrayList) in.readObject();
+            in.close();
+            return info;
+        }
+
         // This method load the images of the objects in the memory
         private void gameRender() throws IOException {
             // map draw
@@ -267,6 +331,7 @@ public class GameScreen extends JFrame {
             g.drawString("FPS: " + averageFPS, 10, 10);
             g.drawString("Zombie counter: " + deadEnemiesCounter, 10, 20);
             g.drawString("Bullet counter: " + projectiles.size(), 10, 30);
+            g.drawString("Score: " + gameScore, 10, 45);
 
             // player died
             if(player.isDead()) {
@@ -279,6 +344,11 @@ public class GameScreen extends JFrame {
                 String str = "G A M E    O V E R   ! ! !";
                 int length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, GameScreen.HEIGHT / 2);
+                try{
+                    checkHighScore(gameScore);
+                }catch (IOException | ClassNotFoundException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             // draw wave number

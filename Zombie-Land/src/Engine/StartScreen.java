@@ -7,6 +7,11 @@ import Utilities.Sound;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 
 public class StartScreen extends JFrame {
@@ -176,7 +181,7 @@ public class StartScreen extends JFrame {
         }
     }
 
-    private void highScoreScreen(ActionEvent evt) {
+    private void highScoreScreen(ActionEvent evt){
         String helpBackgroundPath = "Resources/emptyScreen.jpg";
         ImageHandler ih = new ImageHandler(this);
         Image img = ih.loadImage(helpBackgroundPath);
@@ -187,7 +192,11 @@ public class StartScreen extends JFrame {
         highScoreLabel.setBounds(200, 0, 600, 400);
         highScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 14));
         highScoreLabel.setForeground(new Color(0, 120, 0));
-        highScoreLabel.setText(HighScoreText());
+        try{
+            highScoreLabel.setText(HighScoreText());
+        }catch (IOException | ClassNotFoundException e ){
+
+        }
         highScoreReset.setBackground(new Color(0, 0, 0));
         highScoreReset.setFont(new Font("MV Boli", Font.PLAIN, 24));
         highScoreReset.setForeground(new Color(0, 120, 0));
@@ -220,20 +229,26 @@ public class StartScreen extends JFrame {
         //dispose();
     }
 
-    private String HighScoreText() {
+    private String HighScoreText() throws IOException, ClassNotFoundException {
+        FileInputStream fin;
+        ObjectInputStream in;
+        fin = new FileInputStream("Resources/HighScore/highScore.hs");
+        in = new ObjectInputStream(fin);
+        ArrayList<Integer> ints;
+        ints = (ArrayList<Integer>) in.readObject();
+        in.close();
+        String high = "";
+        int i = 1;
+        for (Integer anInt : ints) {
+            high += i + ". " + anInt + "<br>";
+            i++;
+        }
+        for (int j = i ; j < 11; j++) {
+            high += j + ". <br>";
+        }
         String highScoreText;
         highScoreText = "<html>Welcome to the Z O M B I E - L A N D <br><br>" +
-                "&#9High Scores:<br>" +
-                "1.<br>" +
-                "2.<br>" +
-                "3.<br>" +
-                "4.<br>" +
-                "5.<br>" +
-                "6.<br>" +
-                "7.<br>" +
-                "8.<br>" +
-                "9.<br>" +
-                "10.";
+                "&#9High Scores:<br>" + high;
         return highScoreText;
     }
 

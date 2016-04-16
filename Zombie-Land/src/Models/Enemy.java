@@ -31,6 +31,7 @@ public class Enemy {
     private int speed;
     private int health;
     private int type;
+    private int pointsWorth;
 
     private boolean isReady;
     private boolean isDead;
@@ -101,6 +102,7 @@ public class Enemy {
 
                 this.speed = 2;
                 this.health = 3;
+                this.pointsWorth = 5;
                 break;
             case 2:
                 try {
@@ -125,6 +127,7 @@ public class Enemy {
 
                 this.speed = 5;
                 this.health = 2;
+                this.pointsWorth = 15;
                 break;
             case 3:
                 try {
@@ -149,6 +152,7 @@ public class Enemy {
 
                 this.speed = 3;
                 this.health = 4;
+                this.pointsWorth = 10;
                 break;
             case 4:
                 try {
@@ -173,6 +177,7 @@ public class Enemy {
 
                 this.speed = 2;
                 this.health = 20;
+                this.pointsWorth = 25;
                 break;
             default:
                 break;
@@ -212,6 +217,7 @@ public class Enemy {
             this.health--;
             if (health <= 0) {
                 GameScreen.deadEnemiesCounter--;
+                GameScreen.gameScore += this.pointsWorth;
                 this.isDead = true;
                 this.DeadEnemy();
             }
