@@ -1,5 +1,7 @@
 package GameState;
 
+import Engine.GameScreen;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,10 +15,20 @@ public class GameStateManager {
     public static final int NORMALDIFICULTYSETTING = 1;
 
     public GameStateManager() {
-        gameStates = new ArrayList<GameState>();
+        int typeLevel = (int)((Math.random()*4) + 1);
 
-        currentState = 0;
+        gameStates = new ArrayList<GameState>();
         gameStates.add(new GrassLevel(this));
+        gameStates.add(new DesertLevel(this));
+        gameStates.add(new RainLevel(this));
+        gameStates.add(new SnowLevel(this));
+        if(GameScreen.waveNumber == 1){
+            currentState = (int) (Math.random() * 4);
+        } else if(GameScreen.waveNumber %5 == 0){
+            currentState = (int) (Math.random() * 4);
+        }
+
+
     }
 
     public void setState (int state) {

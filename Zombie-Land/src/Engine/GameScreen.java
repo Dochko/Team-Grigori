@@ -43,7 +43,7 @@ public class GameScreen extends JFrame {
     private long waveStartTimer; // the starting time of the wave
     private long waveStartTimerDiff; // this starts the wave after the delay we set it
     private int waveDelay = 2000; // wave start delay
-    private int waveNumber;
+    public static int waveNumber;
     private int defaultSpawnEnemySize = 10;
     private int endWaveNumber = 25;
     public static int deadEnemiesCounter;
@@ -152,7 +152,7 @@ public class GameScreen extends JFrame {
             waveStartTimer = 0;
             waveStartTimerDiff = 0;
             waveStart = true;
-            waveNumber = 4;
+            waveNumber = 0;
 
             gameEnded = false;
         }
