@@ -33,9 +33,13 @@ public class Player{
     private int dx;
     private int dy;
 
+    private ArrayList<Projectiles> bullets;
     private boolean firing = false;
     private long firingTimer = System.nanoTime();
     private long firingDelay = 100; // firing speed
+    private int weaponType;
+    private int shotgunAmmo;
+    private int gaussAmmo;
 
     private boolean isDead;
 
@@ -79,6 +83,11 @@ public class Player{
         this.health = 100;
         this.isDead = false;
 
+        this.bullets = new ArrayList<>();
+        this.shotgunAmmo = 100;
+        this.gaussAmmo = 10;
+        this.weaponType = 1;
+
         this.playerBorder = new Rectangle(this.x, this.y, this.width-20, this.height - 8);
     }
 
@@ -106,6 +115,19 @@ public class Player{
         return (int)this.health;
     }
 
+    public void addHealth(int health) {
+        if (this.health < 100) {
+            this.health += health;
+            if (this.health > 100) {
+                this.health = 100;
+            }
+        }
+    }
+
+    public int getShotgunAmmo() { return this.shotgunAmmo; }
+
+    public int getGaussAmmo() { return this.gaussAmmo; }
+
     public Rectangle getPlayerBorder() {
         return this.playerBorder;
     }
@@ -122,18 +144,34 @@ public class Player{
         return this.animator.isDoneAnimating();
     }
 
-    public void hit() {
+    public void setWeaponType(int weaponType) {
+        this.weaponType = weaponType;
+    }
 
+    public int getWeaponType() {
+        return this.weaponType;
+    }
+
+    public void addShotgunAmmo(int ammo) {
+        this.shotgunAmmo += ammo;
+    }
+
+    public void addGaussAmmo(int ammo) {
+        this.gaussAmmo += ammo;
+    }
+
+    public void hit(double damageTaken) {
         //Sound effects during hit
         player_grunt.setVolumeDown(10f);
         player_grunt.Play();
 
-        this.health -= 10f / 20f;
+        this.health -= damageTaken / 10f;
         if (health <= 0) {
             this.health = 0;
             this.isDead = true;
             this.deadPlayer();
         }
+
     }
 
     private void deadPlayer() {
@@ -189,15 +227,73 @@ public class Player{
         this.dx = 0;
         this.dy = 0;
 
-        if(this.firing) {
-            int random = (int)((Math.random() * 11) -8);
-            long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
-            if(elapsed > this.firingDelay) {
-                GameScreen.projectiles.add(new Projectiles((this.angle - 90) + random, x + (this.width / 2), y + (this.height / 2),"Resources/bullet.png"));
-                firingTimer = System.nanoTime();
-            }
+        this.switchWeapon();
+    }
+
+    private void switchWeapon() {
+        switch (weaponType) {
+            // Default weapon
+            case 1:
+                if (this.firing) {
+                    int firingSpread = (int) ((Math.random() * 11) - 8);
+                    long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
+                    this.firingDelay = 200;
+                    if (elapsed > this.firingDelay) {
+                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png");
+                        bullet.setBulletDamage(2);
+                        GameScreen.projectiles.add(bullet);
+                        firingTimer = System.nanoTime();
+                    }
+                }
+                break;
+            // Shotgun
+            case 2:
+                if (this.firing && shotgunAmmo > 0) {
+                    ArrayList<Integer> randomAngles = new ArrayList<>();
+                    for (int i = 0; i < 10; i++) {
+                        int firingSpread = (int) ((Math.random() * 30) - 25);
+                        randomAngles.add(firingSpread);
+                    }
+
+                    long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
+                    this.firingDelay = 1000;
+                    if (elapsed > this.firingDelay) {
+                        for (int i = 0; i < 10; i++) {
+                            bullets.add(new Projectiles((this.angle - 90) + randomAngles.get(i), x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png"));
+                        }
+
+                        for (Projectiles bullet : bullets) {
+                            bullet.setSpeed(5);
+                            bullet.setBulletDamage(1);
+                            GameScreen.projectiles.add(bullet);
+                        }
+
+                        this.firingTimer = System.nanoTime();
+                        this.shotgunAmmo -= 10;
+                    }
+                }
+                break;
+            // Gauss rifle
+            case 3:
+                if (this.firing && this.gaussAmmo > 0) {
+                    int firingSpread = (int) ((Math.random() * 5) - 3);
+                    long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
+                    this.firingDelay = 600;
+                    if (elapsed > this.firingDelay) {
+                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png");
+                        bullet.setBulletDamage(10);
+                        bullet.setSpeed(40);
+                        GameScreen.projectiles.add(bullet);
+                        firingTimer = System.nanoTime();
+                        this.gaussAmmo--;
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
+
     public void draw(Graphics2D g) {
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);

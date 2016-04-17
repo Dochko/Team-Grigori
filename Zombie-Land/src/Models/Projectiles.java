@@ -24,6 +24,7 @@ public class Projectiles {
     private double rad;
     private double angle;
     private double speed;
+    private int bulletDamage;
 
     public Projectiles(double angle, int x, int y, String path) {
         try {
@@ -50,6 +51,16 @@ public class Projectiles {
 
     public Rectangle getBulletBorder() {
         return this.bulletBorder;
+    }
+
+    public int getBulletDamage() { return this.bulletDamage; }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void setBulletDamage(int damage) {
+        this.bulletDamage = damage;
     }
 
     public boolean update() {

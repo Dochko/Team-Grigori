@@ -1,6 +1,7 @@
 package Engine;
 
 import GameState.GameStateManager;
+import Models.Bonus;
 import Models.Enemy;
 import Models.Player;
 import Models.Projectiles;
@@ -14,7 +15,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GameScreen extends JFrame {
     public static int WIDTH = 970;
@@ -37,6 +37,7 @@ public class GameScreen extends JFrame {
     public static ArrayList<Projectiles> projectiles;
     public static ArrayList<Projectiles> enemyProjectiles;
     public static ArrayList<Enemy> enemies;
+    public static ArrayList<Bonus> bonuses;
 
 
     private boolean waveStart; // pause between waves
@@ -148,6 +149,7 @@ public class GameScreen extends JFrame {
             projectiles = new ArrayList<>();
             enemyProjectiles = new ArrayList<>();
             enemies = new ArrayList<>();
+            bonuses = new ArrayList<>();
 
             waveStartTimer = 0;
             waveStartTimerDiff = 0;
@@ -238,7 +240,12 @@ public class GameScreen extends JFrame {
                 }
             }
 
-            // bullet-enemy collision
+            // bonuses update
+            for (Bonus bonus : bonuses) {
+                bonus.update();
+            }
+
+            // player bullet - enemy collision
             for (int i = 0; i < projectiles.size(); i++) {
                 Projectiles bullet = projectiles.get(i);
                 Rectangle playerBulletBorder = bullet.getBulletBorder();
@@ -246,26 +253,37 @@ public class GameScreen extends JFrame {
                 for (Enemy enemy : enemies) {
                     Rectangle enemyBorder = enemy.getEnemyBorder();
 
-                    if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
-                        enemy.hit();
+                    if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead() && player.getWeaponType() != 3) {
+                        enemy.hit(bullet.getBulletDamage());
                         projectiles.remove(i);
                         i--;
                         break;
+                    } else if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
+                        enemy.hit(bullet.getBulletDamage());
+                    } else if(enemy.isDead() && !enemy.getDroppedBonus()) {
+                        int rnd = (int) (Math.random() * 16);
+                        if(rnd == 5 || rnd == 10 || rnd == 15) {
+                            bonuses.add(new Bonus((int) enemy.getX(), (int) enemy.getY()));
+                        }
+
+                        enemy.setDroppedBonus(true);
                     }
                 }
             }
 
-            // bullet-player collision
+            // enemy bullet - player collision
             for (int i = 0; i < enemyProjectiles.size(); i++) {
                 Projectiles enemyBullet = enemyProjectiles.get(i);
                 Rectangle bossBulletBorder = enemyBullet.getBulletBorder();
                 Rectangle playerBorder = player.getPlayerBorder();
 
-                if (bossBulletBorder.intersects(playerBorder) && !player.isDead()) {
-                    player.hit();
-                    enemyProjectiles.remove(i);
-                    i--;
-                    break;
+                for (Enemy boss : enemies) {
+                    if (bossBulletBorder.intersects(playerBorder) && !player.isDead()) {
+                        player.hit(boss.getDamage());
+                        enemyProjectiles.remove(i);
+                        i--;
+                        break;
+                    }
                 }
             }
 
@@ -275,12 +293,38 @@ public class GameScreen extends JFrame {
                 Rectangle playerBorder = player.getPlayerBorder();
 
                 if (enemyBorder.intersects(playerBorder) && !player.isDead() && !enemy.isDead() ) {
-                    player.hit();
+                    player.hit(enemy.getDamage());
                     healthBar.width = player.getHealth() * 2;
 
                     //Sound effects
                     zombie_eat.setVolumeDown(10f);
                     zombie_eat.Play();
+                }
+            }
+
+            // player - bonus collision
+            for (int i = 0; i < bonuses.size(); i++) {
+
+                Rectangle bonusBorder = bonuses.get(i).getBonusBorder();
+                Rectangle playerBorder = player.getPlayerBorder();
+
+                if (playerBorder.intersects(bonusBorder)) {
+                    switch (bonuses.get(i).getType()) {
+                        case 0:
+                            player.addHealth(bonuses.get(i).getBonusGiven());
+                            break;
+                        case 1:
+                            player.addShotgunAmmo(bonuses.get(i).getBonusGiven());
+                            break;
+                        case 2:
+                            player.addGaussAmmo(bonuses.get(i).getBonusGiven());
+                            break;
+                        default:
+                            break;
+                    }
+
+                    bonuses.remove(i);
+                    i--;
                 }
             }
         }
@@ -377,6 +421,11 @@ public class GameScreen extends JFrame {
                 enemyProjectile.draw(g);
             }
 
+            // bonus draw
+            for (Bonus bonus : bonuses) {
+                bonus.draw(g);
+            }
+
             // player draw
             player.draw(g);
 
@@ -404,6 +453,8 @@ public class GameScreen extends JFrame {
             g.drawString("Zombie counter: " + deadEnemiesCounter, 10, 20);
             g.drawString("Bullet counter: " + projectiles.size(), 10, 30);
             g.drawString("Score: " + gameScore, 10, 45);
+            g.drawString("Shotgun ammo: " + player.getShotgunAmmo(), 10, 60);
+            g.drawString("Gauss ammo: " + player.getGaussAmmo(), 10, 70);
 
             // player died
             if(player.isDead()) {
@@ -531,6 +582,18 @@ public class GameScreen extends JFrame {
                 player.setRight(true);
             }
 
+            if (key.getKeyCode() == KeyEvent.VK_1) {
+                player.setWeaponType(1);
+            }
+
+            if (key.getKeyCode() == KeyEvent.VK_2) {
+                player.setWeaponType(2);
+            }
+
+            if (key.getKeyCode() == KeyEvent.VK_3) {
+                player.setWeaponType(3);
+            }
+
             if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 game_music.Close();
                 setVisible(false);
@@ -609,5 +672,3 @@ public class GameScreen extends JFrame {
         }
     }
 }
-
-
