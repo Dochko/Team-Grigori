@@ -22,18 +22,11 @@ public class GameStateManager {
         gameStates.add(new DesertLevel(this));
         gameStates.add(new RainLevel(this));
         gameStates.add(new SnowLevel(this));
-        if(GameScreen.waveNumber == 1){
-            currentState = (int) (Math.random() * 4);
-        } else if(GameScreen.waveNumber %5 == 0){
-            currentState = (int) (Math.random() * 4);
-        }
-
-
+        currentState = (int) (Math.random() * 4);
     }
 
     public void setState (int state) {
         currentState = state;
-        gameStates.get(currentState).init();
     }
 
     public void update() {

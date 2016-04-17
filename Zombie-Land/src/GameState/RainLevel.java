@@ -13,8 +13,6 @@ public class RainLevel extends GameState {
     public RainLevel(GameStateManager gsm) {
         this.gsm = gsm;
 
-
-
         try {
             gameStateBackground = new GameStateBackground(backgroundPath);
         } catch (Exception e) {

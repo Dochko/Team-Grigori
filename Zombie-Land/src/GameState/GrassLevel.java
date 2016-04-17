@@ -20,7 +20,6 @@ public class GrassLevel extends GameState {
 
     @Override
     public void init() {
-
     }
 
     @Override

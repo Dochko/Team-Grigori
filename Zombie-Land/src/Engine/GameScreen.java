@@ -43,7 +43,7 @@ public class GameScreen extends JFrame {
     private long waveStartTimer; // the starting time of the wave
     private long waveStartTimerDiff; // this starts the wave after the delay we set it
     private int waveDelay = 2000; // wave start delay
-    public static int waveNumber;
+    private int waveNumber;
     private int defaultSpawnEnemySize = 10;
     private int endWaveNumber = 25;
     public static int deadEnemiesCounter;
@@ -153,7 +153,7 @@ public class GameScreen extends JFrame {
             waveStartTimerDiff = 0;
             waveStart = true;
             waveNumber = 0;
-
+            gameScore = 0;
             gameEnded = false;
         }
 
@@ -394,7 +394,7 @@ public class GameScreen extends JFrame {
 
             g.setFont(new Font("Century Gothic", Font.PLAIN, 14));
             g.setColor(Color.WHITE);
-            g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 140, 25);
+            g.drawString("Health: " + player.getHealth(), GameScreen.WIDTH - 150, 25);
 
             // draw avg fps and other information
             averageFPS = frameCounter.getFrameRate();
@@ -483,6 +483,10 @@ public class GameScreen extends JFrame {
 
             if(waveNumber <= endWaveNumber) {
                 if (waveNumber % 5 == 0 && waveNumber > 1) {
+                    // change background every 5 levels
+                    int randomState = (int) (Math.random() * 4);
+                    gsm.setState(randomState);
+
                     deadEnemiesCounter = ((defaultSpawnEnemySize * waveNumber + 1) / 2) * GameScreen.difficult;
                     for (int i = 0; i < (waveNumber / 5) * GameScreen.difficult; i++) {
                         enemies.add(new Enemy(4));
