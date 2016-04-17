@@ -3,9 +3,6 @@ package GameState;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * Created by User on 17.04.2016.
- */
 public class RainLevel extends GameState {
     private GameStateBackground gameStateBackground;
     private String backgroundPath = "Resources/rain.jpg";

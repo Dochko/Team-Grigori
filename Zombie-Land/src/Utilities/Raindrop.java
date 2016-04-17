@@ -1,4 +1,6 @@
-package GameState;
+package Utilities;
+
+import GameState.GameState;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,9 +16,6 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- * Created by User on 17.04.2016.
- */
 public class Raindrop extends GameState {
 
     public class Main {

@@ -310,6 +310,7 @@ public class StartScreen extends JFrame {
                 "&#9Button configuration:<br>" +
                 "1.\"W, S, D, A\" - Move commands.<br>" +
                 "2.\"Mouse Left Click\" - Fire.<br>" +
+                "3.\"1, 2 or 3\" - Change weapons.<br>" +
                 "<br>Good Luck in your endeavour.</html>";
         return helpText;
     }
