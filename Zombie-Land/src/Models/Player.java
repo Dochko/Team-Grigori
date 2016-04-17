@@ -2,6 +2,7 @@ package Models;
 
 import Engine.GameScreen;
 import Utilities.Animator;
+import Utilities.Sound;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,6 +41,8 @@ public class Player{
 
     private int speed;
     private double health;
+
+    private Sound player_grunt = new Sound("sound/Player/grunt.wav");
 
     public Player() {
         this.spritesMove = new ArrayList<>();
@@ -120,6 +123,11 @@ public class Player{
     }
 
     public void hit() {
+
+        //Sound effects during hit
+        player_grunt.setVolumeDown(10f);
+        player_grunt.Play();
+
         this.health -= 10f / 20f;
         if (health <= 0) {
             this.health = 0;
@@ -185,12 +193,11 @@ public class Player{
             int random = (int)((Math.random() * 11) -8);
             long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
             if(elapsed > this.firingDelay) {
-                GameScreen.projectiles.add(new Projectiles((this.angle - 90) + random, x + (this.width / 2), y + (this.height / 2)));
+                GameScreen.projectiles.add(new Projectiles((this.angle - 90) + random, x + (this.width / 2), y + (this.height / 2),"Resources/bullet.png"));
                 firingTimer = System.nanoTime();
             }
         }
     }
-
     public void draw(Graphics2D g) {
         AffineTransform reset = new AffineTransform();
         reset.rotate(0, 0, 0);

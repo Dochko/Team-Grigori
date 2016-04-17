@@ -2,6 +2,7 @@ package Models;
 
 import Engine.GameScreen;
 import Utilities.Animator;
+import Utilities.Sound;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -34,10 +35,14 @@ public class Enemy {
     private int pointsWorth;
 
     private long bossFiringTimer = System.nanoTime();
-    private long bossFiringDelay = 500; // firing speed
+    private long bossFiringDelay = 3000; // firing speed
 
     private boolean isReady;
     private boolean isDead;
+
+    private Sound boss_shoot = new Sound("sound/Zombies/boss-shoot.wav");
+    //private ArrayList<Sound> zombie_die = new ArrayList<>();
+    private Sound zombie_die;
 
     public Enemy(int type) {
         this.type = type;
@@ -82,6 +87,8 @@ public class Enemy {
         switch (type) {
             // Normal zombie
             case 1:
+                zombie_die = new Sound("sound/Zombies/zombie-die1.wav");
+                zombie_die.setVolumeDown(10f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
@@ -107,7 +114,10 @@ public class Enemy {
                 this.health = 3;
                 this.pointsWorth = 5;
                 break;
+            //Zombie Dog
             case 2:
+                zombie_die = new Sound("sound/Zombies/zombie-dog-die.wav");
+                zombie_die.setVolumeDown(4f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove1.png")));
@@ -132,7 +142,10 @@ public class Enemy {
                 this.health = 2 * GameScreen.difficult;
                 this.pointsWorth = 15 * GameScreen.difficult;
                 break;
+            //Advanced Zombie
             case 3:
+                zombie_die = new Sound("sound/Zombies/zombie-die2.wav");
+                zombie_die.setVolumeDown(10f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove1.png")));
@@ -157,7 +170,9 @@ public class Enemy {
                 this.health = 4 * GameScreen.difficult;
                 this.pointsWorth = 10 * GameScreen.difficult;
                 break;
+            //Zombie Boss
             case 4:
+                zombie_die = new Sound("sound/Zombies/zombie-growl1.wav");
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove1.png")));
@@ -249,14 +264,17 @@ public class Enemy {
                 int random = (int)((Math.random() * 11) -8);
                 long elapsed = (System.nanoTime() - this.bossFiringTimer) / 1000000;
                 if(elapsed > this.bossFiringDelay) {
-                    GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x + (this.width / 2), y + (this.height / 2)));
+                    GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x, y ,"Resources/Virus.png"));
                     bossFiringTimer = System.nanoTime();
+                    boss_shoot.setVolumeDown(8f);
+                    boss_shoot.Play();
                 }
             }
         }else{
             if(animator.isDoneAnimating()){
                 animator.pause();
             }else{
+                zombie_die.Play();
                 this.animator.update(System.currentTimeMillis());
             }
         }

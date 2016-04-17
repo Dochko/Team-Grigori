@@ -23,6 +23,7 @@ public class StartScreen extends JFrame {
     private String introMusicPath = "sound/Game/Intro.wav";
 
     private Sound intro;
+    private Sound hover_sound;
 
     private JPanel gameStartPanel;
     private JLabel gameTitle;
@@ -339,6 +340,8 @@ public class StartScreen extends JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(new Color(0, 120, 0));
                 button.setForeground(Color.black);
+                hover_sound = new Sound("sound/Game/hover.wav");
+                hover_sound.Play();
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
