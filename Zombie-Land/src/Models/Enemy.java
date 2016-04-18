@@ -20,6 +20,7 @@ public class Enemy {
     private int width;
     private int height;
     private Rectangle enemyBorder;
+    private int collisionWidth;
 
     private int x;
     private int y;
@@ -83,7 +84,7 @@ public class Enemy {
         this.isDead = false;
         this.droppedBonus = false;
 
-        this.enemyBorder = new Rectangle(this.x, this.y, this.width, this.height);
+        this.enemyBorder = new Rectangle(this.x, this.y, this.width - this.collisionWidth, this.height);
     }
 
     private void enemyTypes(int type) {
@@ -106,6 +107,7 @@ public class Enemy {
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
                     this.animator.start();
+                    this.collisionWidth = 15;
 
                     animator.update(System.currentTimeMillis());
                 } catch (IOException e) {
@@ -136,6 +138,7 @@ public class Enemy {
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
                     this.animator.start();
+                    this.collisionWidth = 20;
 
                     animator.update(System.currentTimeMillis());
                 } catch (IOException e) {
@@ -165,6 +168,7 @@ public class Enemy {
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
                     this.animator.start();
+                    this.collisionWidth = 15;
 
                     animator.update(System.currentTimeMillis());
                 } catch (IOException e) {
@@ -193,6 +197,7 @@ public class Enemy {
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
                     this.animator.start();
+                    this.collisionWidth = 15;
 
                     animator.update(System.currentTimeMillis());
                 } catch (IOException e) {
@@ -274,7 +279,7 @@ public class Enemy {
 
             this.animator.update(System.currentTimeMillis());
 
-            this.enemyBorder.x = this.x;
+            this.enemyBorder.x = this.x + this.collisionWidth / 2;
             this.enemyBorder.y = this.y;
 
             if(this.type == 4) {
