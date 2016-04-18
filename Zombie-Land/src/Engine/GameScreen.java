@@ -30,7 +30,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 30;
+    private int FPS = 1000 / 60;
     private int averageFPS;
 
     public static Player player;
@@ -543,7 +543,7 @@ public class GameScreen extends JFrame {
                     for (int i = 0; i < numberOfBosses; i++) {
                         enemies.add(new Enemy(4));
                     }
-                    for (int j = 1; j < deadEnemiesCounter; j++) {
+                    for (int j = 0; j < deadEnemiesCounter; j++) {
                         enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
                     }
                     deadEnemiesCounter += numberOfBosses;

@@ -58,10 +58,10 @@
       <file leaf-file-name="GameScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Engine/GameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="548" column="57" selection-start-line="548" selection-start-column="57" selection-end-line="548" selection-end-column="57" />
+            <state relative-caret-position="173">
+              <caret line="543" column="50" selection-start-line="543" selection-start-column="50" selection-end-line="543" selection-end-column="50" />
               <folding>
-                <marker date="1461001619486" expanded="false" signature="23861:23871" placeholder=" }" />
+                <marker date="1461002067072" expanded="false" signature="23861:23871" placeholder=" }" />
               </folding>
             </state>
           </provider>
@@ -1008,10 +1008,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Engine/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="548" column="57" selection-start-line="548" selection-start-column="57" selection-end-line="548" selection-end-column="57" />
+        <state relative-caret-position="173">
+          <caret line="543" column="50" selection-start-line="543" selection-start-column="50" selection-end-line="543" selection-end-column="50" />
           <folding>
-            <marker date="1461001619486" expanded="false" signature="23861:23871" placeholder=" }" />
+            <marker date="1461002067072" expanded="false" signature="23861:23871" placeholder=" }" />
           </folding>
         </state>
       </provider>
