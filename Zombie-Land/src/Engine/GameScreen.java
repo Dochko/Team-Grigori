@@ -58,13 +58,15 @@ public class GameScreen extends JFrame {
     //Health Bar
     private Rectangle healthBar = new Rectangle(WIDTH - 210, 10,200 ,20);
 
-    //Sound
-    private Sound game_music = new Sound("sound/Game/GameMusic.wav");
+    //In-Game Sounds.
+    private Sound game_music = new Sound("sound/Game/GameMusic-Theme1.wav");
     private Sound victory_music = new Sound("sound/Game/Victory.wav");
     private Sound defeat_music = new Sound("sound/Game/Defeat.wav");
     private Sound player_run = new Sound("sound/Player/run-grass.wav");
-    private Sound player_shoot =new Sound("sound/Guns/ak74-shoot.wav");
     private Sound zombie_eat = new Sound("sound/Zombies/zombie-eating.wav");
+    private Sound bonus_shotgun_ammo = new Sound("sound/Bonus/shotgun-ammo.wav");
+    private Sound bonus_rifle_ammo = new Sound("sound/Bonus/rifle-ammo.wav");
+    private Sound bonus_health = new Sound("sound/Bonus/health.wav");
 
     // JFrame constructor
     public GameScreen() {
@@ -83,6 +85,7 @@ public class GameScreen extends JFrame {
                 new ImageIcon("Resources/crosshair.png").getImage(), new Point(17 / 2, 17 / 2), "custom cursor"));
         this.pack();
 
+        game_music.setVolumeUp(4f);
         game_music.Loop();
     }
 
@@ -287,6 +290,7 @@ public class GameScreen extends JFrame {
                 for (Enemy boss : enemies) {
                     if (bossBulletBorder.intersects(playerBorder) && !player.isDead()) {
                         player.hit(boss.getDamage());
+                        healthBar.width = player.getHealth() * 2;
                         enemyProjectiles.remove(i);
                         i--;
                         break;
@@ -322,17 +326,27 @@ public class GameScreen extends JFrame {
                                 player.addHealth(bonuses.get(i).getBonusGiven());
                                 bonuses.remove(i);
                                 i--;
+
+                                healthBar.width = player.getHealth() * 2;
+                                bonus_health.setVolumeDown(17f);
+                                bonus_health.Play();
                             }
                             break;
                         case 1:
                             player.addShotgunAmmo(bonuses.get(i).getBonusGiven());
                             bonuses.remove(i);
                             i--;
+
+                            bonus_shotgun_ammo.setVolumeDown(16f);
+                            bonus_shotgun_ammo.Play();
                             break;
                         case 2:
                             player.addGaussAmmo(bonuses.get(i).getBonusGiven());
                             bonuses.remove(i);
                             i--;
+
+                            bonus_rifle_ammo.setVolumeDown(12f);
+                            bonus_rifle_ammo.Play();
                             break;
                         default:
                             break;
@@ -472,10 +486,9 @@ public class GameScreen extends JFrame {
             if(player.isDead()) {
                 //sound control
                 game_music.Close();
-                player_shoot.Close();
                 player_run.Close();
                 zombie_eat.Close();
-                defeat_music.setVolumeUp(4f);
+                defeat_music.setVolumeUp(5f);
                 defeat_music.Play();
 
                 g.setFont(new Font("Century Gothic", Font.BOLD, 36));
@@ -661,8 +674,6 @@ public class GameScreen extends JFrame {
         public void mousePressed(MouseEvent mouseButton) {
             if (mouseButton.getButton() == MouseEvent.BUTTON1 && !player.isDead()){
                 player.setFiring(true);
-                player_shoot.setVolumeDown(15f);
-                player_shoot.ShootLoop();
             }
         }
 
@@ -670,7 +681,6 @@ public class GameScreen extends JFrame {
         public void mouseReleased(MouseEvent mouseButton) {
             if (mouseButton.getButton() == MouseEvent.BUTTON1){
                 player.setFiring(false);
-                player_shoot.Stop();
             }
         }
 

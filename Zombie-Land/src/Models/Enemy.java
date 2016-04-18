@@ -92,7 +92,7 @@ public class Enemy {
             // Normal zombie
             case 1:
                 zombie_die = new Sound("sound/Zombies/zombie-die1.wav");
-                zombie_die.setVolumeDown(10f);
+                zombie_die.setVolumeDown(12f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
@@ -153,7 +153,7 @@ public class Enemy {
             //Advanced Zombie
             case 3:
                 zombie_die = new Sound("sound/Zombies/zombie-die2.wav");
-                zombie_die.setVolumeDown(10f);
+                zombie_die.setVolumeDown(12f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove1.png")));
@@ -289,7 +289,7 @@ public class Enemy {
                     GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x, y ,"Resources/Virus.png"));
                     bossFiringTimer = System.nanoTime();
                     boss_shoot.setVolumeDown(8f);
-                    boss_shoot.Play();
+                    boss_shoot.PlayGunSound();
                 }
             }
         }else{

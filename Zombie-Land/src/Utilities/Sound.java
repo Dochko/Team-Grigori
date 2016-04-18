@@ -43,6 +43,10 @@ public class Sound {
         this.clip.start();
     }
 
+    public void PlayGunSound(){
+        this.clip.setFramePosition(0);
+        this.clip.start();
+    }
 
     public void Stop(){
         this.clip.stop();
@@ -57,12 +61,5 @@ public class Sound {
     public void Loop(){
         this.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public void ShootLoop(){
-        if(!this.clip.isRunning()){
-            this.clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
 
-        this.clip.setFramePosition(0);
-
-    }
 }

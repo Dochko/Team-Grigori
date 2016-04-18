@@ -48,7 +48,11 @@ public class Player{
     private int speed;
     private double health;
 
+    //Player Sounds
     private Sound player_grunt = new Sound("sound/Player/grunt.wav");
+    private Sound player_shoot_ak74 = new Sound("sound/Guns/ak74-shoot.wav");
+    private Sound player_shoot_gauss = new Sound("sound/Guns/Rifle-Shoot.wav");
+    private Sound player_shoot_shotgun = new Sound("sound/Guns/Shotgun-Shoot.wav");
 
     public Player() {
         this.spritesMoveGun = new ArrayList<>();
@@ -270,6 +274,9 @@ public class Player{
                         bullet.setBulletDamage(2);
                         GameScreen.projectiles.add(bullet);
                         firingTimer = System.nanoTime();
+
+                        player_shoot_ak74.setVolumeDown(20f);
+                        player_shoot_ak74.PlayGunSound();
                     }
                 }
                 break;
@@ -297,6 +304,9 @@ public class Player{
 
                         this.firingTimer = System.nanoTime();
                         this.shotgunAmmo -= 10;
+
+                        player_shoot_shotgun.setVolumeDown(13f);
+                        player_shoot_shotgun.PlayGunSound();
                     }
                 }
                 break;
@@ -313,6 +323,10 @@ public class Player{
                         GameScreen.projectiles.add(bullet);
                         firingTimer = System.nanoTime();
                         this.gaussAmmo--;
+
+
+                        player_shoot_gauss.setVolumeDown(12f);
+                        player_shoot_gauss.PlayGunSound();
                     }
                 }
                 break;
