@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class DesertLevel extends GameState {
     private GameStateBackground gameStateBackground;
-    private String backgroundPath = "Resources/desert.jpg";
+    private String backgroundPath = "Resources/Backgrounds/desert.jpg";
 
     public DesertLevel(GameStateManager gsm) {
         this.gsm = gsm;

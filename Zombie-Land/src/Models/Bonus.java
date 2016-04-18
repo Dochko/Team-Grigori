@@ -50,7 +50,7 @@ public class Bonus {
             // Health bonus
             case 0:
                 try {
-                    this.image = ImageIO.read(new File("Resources/health.png"));
+                    this.image = ImageIO.read(new File("Resources/Models/Bonuses/health.png"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -60,7 +60,7 @@ public class Bonus {
             // Shotgun ammo
             case 1:
                 try {
-                    this.image = ImageIO.read(new File("Resources/shotgunAmmo.png"));
+                    this.image = ImageIO.read(new File("Resources/Models/Bonuses/shotgunAmmo.png"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -70,7 +70,7 @@ public class Bonus {
             // Gauss ammo
             case 2:
                 try {
-                    this.image = ImageIO.read(new File("Resources/gaussAmmo.png"));
+                    this.image = ImageIO.read(new File("Resources/Models/Bonuses/gaussAmmo.png"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

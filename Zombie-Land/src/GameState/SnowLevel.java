@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class SnowLevel extends GameState {
     private GameStateBackground gameStateBackground;
-    private String backgroundPath = "Resources/snow.jpg";
+    private String backgroundPath = "Resources/Backgrounds/snow.jpg";
 
     public SnowLevel(GameStateManager gsm) {
         this.gsm = gsm;

@@ -17,9 +17,9 @@ public class StartScreen extends JFrame {
     private int HEIGHT = 545;
 
     private String windowTitle = "Zombie - Land";
-    private String windowIconPath = "Resources/IconSmall_Zombie.gif";
-    private String backgroundImgPath = "Resources/startscreenBackground.jpg";
-    private String cursorImgPath = "Resources/zombieHandCursor.gif";
+    private String windowIconPath = "Resources/Screen Utilities/IconSmall_Zombie.gif";
+    private String backgroundImgPath = "Resources/Backgrounds/startscreen.jpg";
+    private String cursorImgPath = "Resources/Screen Utilities/zombieHandCursor.gif";
     private String introMusicPath = "sound/Game/Intro.wav";
 
     private Sound intro;
@@ -185,7 +185,7 @@ public class StartScreen extends JFrame {
     }
 
     private void highScoreScreen(ActionEvent evt){
-        String helpBackgroundPath = "Resources/emptyScreen.jpg";
+        String helpBackgroundPath = "Resources/Backgrounds/emptyStartScreen.jpg";
         ImageHandler ih = new ImageHandler(this);
         Image img = ih.loadImage(helpBackgroundPath);
         highScorePane = new BackgroundImageComponent(img);;
@@ -272,7 +272,7 @@ public class StartScreen extends JFrame {
     }
 
     private void helpScreen(ActionEvent evt) {
-        String helpBackgroundPath = "Resources/emptyScreen.jpg";
+        String helpBackgroundPath = "Resources/Backgrounds/emptyScreen.jpg";
         ImageHandler ih = new ImageHandler(this);
         Image img = ih.loadImage(helpBackgroundPath);
         helpPane = new BackgroundImageComponent(img);;

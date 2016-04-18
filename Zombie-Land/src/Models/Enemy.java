@@ -94,15 +94,15 @@ public class Enemy {
                 zombie_die = new Sound("sound/Zombies/zombie-die1.wav");
                 zombie_die.setVolumeDown(12f);
                 try {
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving0.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving1.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving2.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieMoving3.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving3.png")));
 
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing0.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing1.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing2.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/NormalZombie/normalZombieDieing3.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieDieing3.png")));
 
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
@@ -125,15 +125,15 @@ public class Enemy {
                 zombie_die = new Sound("sound/Zombies/zombie-dog-die.wav");
                 zombie_die.setVolumeDown(4f);
                 try {
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove0.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove1.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove2.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogMove3.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove3.png")));
 
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing0.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing1.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing2.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Dog/dogDieing3.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogDieing3.png")));
 
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
@@ -155,15 +155,15 @@ public class Enemy {
                 zombie_die = new Sound("sound/Zombies/zombie-die2.wav");
                 zombie_die.setVolumeDown(12f);
                 try {
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove0.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove1.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove2.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieMove3.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove3.png")));
 
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing0.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing1.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing2.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/AdvancedZombie/AdvancedZombieDieing3.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieDieing3.png")));
 
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
@@ -184,15 +184,15 @@ public class Enemy {
             case 4:
                 zombie_die = new Sound("sound/Zombies/zombie-growl1.wav");
                 try {
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove0.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove1.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove2.png")));
-                    this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossMove3.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossMove0.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossMove1.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossMove2.png")));
+                    this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossMove3.png")));
 
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing0.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing1.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing2.png")));
-                    this.spritesDie.add(ImageIO.read(new File("Resources/Sprites/EnemySprites/Boss/BossDieing3.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossDieing0.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossDieing1.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossDieing2.png")));
+                    this.spritesDie.add(ImageIO.read(new File("Resources/Models/Enemies/Boss/BossDieing3.png")));
 
                     this.animator = new Animator(this.spritesMove);
                     this.animator.setSpeed(200);
@@ -286,7 +286,7 @@ public class Enemy {
                 int random = (int)((Math.random() * 11) -8);
                 long elapsed = (System.nanoTime() - this.bossFiringTimer) / 1000000;
                 if(elapsed > this.bossFiringDelay) {
-                    GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x, y ,"Resources/Virus.png"));
+                    GameScreen.enemyProjectiles.add(new Projectiles((this.angle - 90) + random, x, y ,"Resources/Models/Projectiles/Virus.png"));
                     bossFiringTimer = System.nanoTime();
                     boss_shoot.setVolumeDown(8f);
                     boss_shoot.PlayGunSound();

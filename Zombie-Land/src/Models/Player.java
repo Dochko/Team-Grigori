@@ -61,25 +61,25 @@ public class Player{
         this.spritesDead = new ArrayList<>();
 
         try {
-            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne0.png")));
-            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne1.png")));
-            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne2.png")));
-            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne3.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunOne0.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunOne1.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunOne2.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunOne3.png")));
 
-            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo0.png")));
-            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo1.png")));
-            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo2.png")));
-            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo3.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunTwo0.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunTwo1.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunTwo2.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunTwo3.png")));
 
-            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree0.png")));
-            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree1.png")));
-            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree2.png")));
-            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree3.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunThree0.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunThree1.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunThree2.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Models/Player/movingWithGunThree3.png")));
 
-            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing0.png")));
-            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing1.png")));
-            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing2.png")));
-            this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing3.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Models/Player/dieing0.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Models/Player/dieing1.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Models/Player/dieing2.png")));
+            this.spritesDead.add(ImageIO.read(new File("Resources/Models/Player/dieing3.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,7 +270,7 @@ public class Player{
                     long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
                     this.firingDelay = 200;
                     if (elapsed > this.firingDelay) {
-                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png");
+                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/Models/Projectiles/bullet.png");
                         bullet.setBulletDamage(2);
                         GameScreen.projectiles.add(bullet);
                         firingTimer = System.nanoTime();
@@ -293,7 +293,7 @@ public class Player{
                     this.firingDelay = 1000;
                     if (elapsed > this.firingDelay) {
                         for (int i = 0; i < 10; i++) {
-                            bullets.add(new Projectiles((this.angle - 90) + randomAngles.get(i), x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png"));
+                            bullets.add(new Projectiles((this.angle - 90) + randomAngles.get(i), x + (this.width / 2), y + (this.height / 2), "Resources/Models/Projectiles/bullet.png"));
                         }
 
                         for (Projectiles bullet : bullets) {
@@ -317,7 +317,7 @@ public class Player{
                     long elapsed = (System.nanoTime() - this.firingTimer) / 1000000;
                     this.firingDelay = 600;
                     if (elapsed > this.firingDelay) {
-                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/bullet.png");
+                        Projectiles bullet = new Projectiles((this.angle - 90) + firingSpread, x + (this.width / 2), y + (this.height / 2), "Resources/Models/Projectiles/bullet.png");
                         bullet.setBulletDamage(10);
                         bullet.setSpeed(40);
                         GameScreen.projectiles.add(bullet);

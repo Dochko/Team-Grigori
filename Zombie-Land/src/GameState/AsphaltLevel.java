@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class AsphaltLevel extends GameState {
     private GameStateBackground gameStateBackground;
-    private String backgroundPath = "Resources/asphaltLevel.jpg";
+    private String backgroundPath = "Resources/Backgrounds/asphalt.jpg";
 
     public AsphaltLevel(GameStateManager gsm) {
         this.gsm = gsm;

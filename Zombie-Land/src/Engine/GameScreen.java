@@ -82,7 +82,7 @@ public class GameScreen extends JFrame {
         this.setLocationRelativeTo(null);
         // this.setUndecorated(true);
         setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-                new ImageIcon("Resources/crosshair.png").getImage(), new Point(17 / 2, 17 / 2), "custom cursor"));
+                new ImageIcon("Resources/Screen Utilities/crosshair.png").getImage(), new Point(17 / 2, 17 / 2), "custom cursor"));
         this.pack();
 
         game_music.setVolumeUp(4f);
@@ -159,7 +159,7 @@ public class GameScreen extends JFrame {
             waveStartTimer = 0;
             waveStartTimerDiff = 0;
             waveStart = true;
-            waveNumber = 0;
+            waveNumber = 4;
             gameScore = 0;
             gameEnded = false;
         }
@@ -558,10 +558,13 @@ public class GameScreen extends JFrame {
             enemies.clear();
             deadEnemiesCounter = 0;
             if(waveNumber <= endWaveNumber) {
-                if ((waveNumber % 5) == 1 && waveNumber > 1) {
-                    // change background every 6 levels
+                // change background after every 5 levels
+                if (waveNumber % 5 == 1 && waveNumber > 1) {
                     int randomState = (int) (Math.random() * 4);
                     gsm.setState(randomState);
+                }
+
+                if (waveNumber % 5 == 0 && waveNumber > 1) {
                     int numberOfBosses = (waveNumber / 5) * GameScreen.difficult;
 
                     deadEnemiesCounter = ((defaultSpawnEnemySize * waveNumber) / 2) * GameScreen.difficult;
