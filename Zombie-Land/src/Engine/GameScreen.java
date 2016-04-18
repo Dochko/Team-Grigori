@@ -17,8 +17,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GameScreen extends JFrame {
-    public static int WIDTH = 1300;
-    public static int HEIGHT = 700;
+    public static int WIDTH = 1280;
+    public static int HEIGHT = 600;
 
     private GamePanel panel;
     private Graphics2D g;
