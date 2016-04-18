@@ -1,7 +1,5 @@
 package GameState;
 
-import Engine.GameScreen;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,7 +18,7 @@ public class GameStateManager {
         gameStates = new ArrayList<GameState>();
         gameStates.add(new GrassLevel(this));
         gameStates.add(new DesertLevel(this));
-        gameStates.add(new RainLevel(this));
+        gameStates.add(new AsphaltLevel(this));
         gameStates.add(new SnowLevel(this));
         currentState = (int) (Math.random() * 4);
     }

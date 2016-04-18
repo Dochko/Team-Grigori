@@ -92,7 +92,6 @@ public class Bonus {
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
         g.drawImage(image, this.x, this.y, this.width, this.height, null);
-        g.draw(bonusBorder);
         g.setTransform(reset);
     }
 }

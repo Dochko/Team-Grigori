@@ -326,7 +326,6 @@ public class Player{
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
         g.drawImage(this.animator.sprite, this.x, this.y, this.width, this.height, null);
-        g.draw(playerBorder);
         g.setTransform(reset);
     }
 }

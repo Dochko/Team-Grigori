@@ -1,5 +1,7 @@
 package GameState;
 
+import Engine.GameScreen;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,8 +13,8 @@ import java.io.File;
 public class GameStateBackground {
     BufferedImage image;
 
-    private int width = 970;
-    private int height = 545;
+    private int width = GameScreen.WIDTH;
+    private int height = GameScreen.HEIGHT;
 
     private int x;
     private int y;

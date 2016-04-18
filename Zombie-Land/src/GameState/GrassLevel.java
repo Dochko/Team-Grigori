@@ -6,7 +6,7 @@ import java.awt.*;
 // this will be removed as code pollution and GameStateBackground will be used for background drawing.
 public class GrassLevel extends GameState {
     private GameStateBackground gameStateBackground;
-    private String backgroundPath = "Resources/grass-small.jpg";
+    private String backgroundPath = "Resources/grass.jpg";
 
     public GrassLevel(GameStateManager gsm) {
         this.gsm = gsm;

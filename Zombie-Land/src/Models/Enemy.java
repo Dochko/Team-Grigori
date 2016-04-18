@@ -38,7 +38,7 @@ public class Enemy {
     private boolean droppedBonus;
 
     private long bossFiringTimer = System.nanoTime();
-    private long bossFiringDelay = 3000; // firing speed
+    private long bossFiringDelay = 1000; // firing speed
 
     private boolean isReady;
     private boolean isDead;
@@ -117,7 +117,7 @@ public class Enemy {
 
                 this.speed = 2;
                 this.health = 3 * GameScreen.difficult;
-                this.damage = 3 * GameScreen.difficult;
+                this.damage = 6 * GameScreen.difficult;
                 this.pointsWorth = 5;
                 break;
             //Zombie Dog
@@ -147,7 +147,7 @@ public class Enemy {
 
                 this.speed = 5;
                 this.health = 2 * GameScreen.difficult;
-                this.damage = 2 * GameScreen.difficult;
+                this.damage = 4 * GameScreen.difficult;
                 this.pointsWorth = 15 * GameScreen.difficult;
                 break;
             //Advanced Zombie
@@ -177,7 +177,7 @@ public class Enemy {
 
                 this.speed = 3;
                 this.health = 4 * GameScreen.difficult;
-                this.damage = 4 * GameScreen.difficult;
+                this.damage = 8 * GameScreen.difficult;
                 this.pointsWorth = 20 * GameScreen.difficult;
                 break;
             //Zombie Boss
@@ -206,7 +206,7 @@ public class Enemy {
 
                 this.speed = 2;
                 this.health = 20 * GameScreen.difficult;
-                this.damage = 15 * GameScreen.difficult;
+                this.damage = 100 * GameScreen.difficult;
                 this.pointsWorth = 50 * GameScreen.difficult;
                 break;
             default:
@@ -314,7 +314,6 @@ public class Enemy {
         reset.rotate(0, 0, 0);
         g.rotate(Math.toRadians(this.angle), this.x + (this.width / 2), this.y + (this.height / 2));
         g.drawImage(this.animator.sprite, this.x, this.y, this.width, this.height, null);
-        g.draw(enemyBorder);
         g.setTransform(reset);
     }
 

@@ -17,8 +17,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GameScreen extends JFrame {
-    public static int WIDTH = 970;
-    public static int HEIGHT = 545;
+    public static int WIDTH = 1366;
+    public static int HEIGHT = 768;
 
     private GamePanel panel;
     private Graphics2D g;
@@ -30,7 +30,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 30;
+    private int FPS = 0;
     private int averageFPS;
 
     public static Player player;
@@ -318,20 +318,25 @@ public class GameScreen extends JFrame {
                 if (playerBorder.intersects(bonusBorder)) {
                     switch (bonuses.get(i).getType()) {
                         case 0:
-                            player.addHealth(bonuses.get(i).getBonusGiven());
+                            if (player.getHealth() != 100) {
+                                player.addHealth(bonuses.get(i).getBonusGiven());
+                                bonuses.remove(i);
+                                i--;
+                            }
                             break;
                         case 1:
                             player.addShotgunAmmo(bonuses.get(i).getBonusGiven());
+                            bonuses.remove(i);
+                            i--;
                             break;
                         case 2:
                             player.addGaussAmmo(bonuses.get(i).getBonusGiven());
+                            bonuses.remove(i);
+                            i--;
                             break;
                         default:
                             break;
                     }
-
-                    bonuses.remove(i);
-                    i--;
                 }
             }
         }
@@ -540,8 +545,8 @@ public class GameScreen extends JFrame {
             enemies.clear();
             deadEnemiesCounter = 0;
             if(waveNumber <= endWaveNumber) {
-                if (waveNumber % 5 == 0 && waveNumber > 1) {
-                    // change background every 5 levels
+                if ((waveNumber % 5) == 1 && waveNumber > 1) {
+                    // change background every 6 levels
                     int randomState = (int) (Math.random() * 4);
                     gsm.setState(randomState);
                     int numberOfBosses = (waveNumber / 5) * GameScreen.difficult;
