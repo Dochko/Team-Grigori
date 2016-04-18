@@ -17,8 +17,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GameScreen extends JFrame {
-    public static int WIDTH = 1366;
-    public static int HEIGHT = 768;
+    public static int WIDTH = 1300;
+    public static int HEIGHT = 700;
 
     private GamePanel panel;
     private Graphics2D g;
@@ -30,7 +30,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 0;
+    private int FPS = 1000 / 60;
     private int averageFPS;
 
     public static Player player;
@@ -346,19 +346,19 @@ public class GameScreen extends JFrame {
             boolean check = true;
             boolean done = false;
             HighScoreTemplate newScore = new HighScoreTemplate("", waveNumber, gameScore);
-            ArrayList<HighScoreTemplate> newInts = new ArrayList<>();
+            ArrayList<HighScoreTemplate> newHighScores = new ArrayList<>();
             File file = new File("Resources/HighScore/highScore.hs");
-            ArrayList<HighScoreTemplate> ints = readFromFile(file);
+            ArrayList<HighScoreTemplate> highScores = readFromFile(file);
             JOptionPane optionPane = new JOptionPane();
-            optionPane.setBounds(500, 400, 200, 200);
+            optionPane.setBounds(GameScreen.WIDTH / 2, GameScreen.HEIGHT / 2, 200, 200);
             JDialog dialog = new JDialog();
             dialog.setTitle("High Score achieved");
             dialog.setVisible(true);
             dialog.dispose();
-            if(ints != null) {
+            if(highScores != null) {
                 check = false;
-                for (HighScoreTemplate anInt : ints) {
-                    if(newInts.size() == 10){
+                for (HighScoreTemplate anInt : highScores) {
+                    if(newHighScores.size() == 10){
                         break;
                     }
 
@@ -366,27 +366,27 @@ public class GameScreen extends JFrame {
                         done = true;
                         String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
                         newScore.setName(name);
-                        newInts.add(newScore);
-                        if(newInts.size() < 10){
-                            newInts.add(anInt);
+                        newHighScores.add(newScore);
+                        if(newHighScores.size() < 10){
+                            newHighScores.add(anInt);
                         }
 
                         check = true;
                         gameScore = -1;
                     } else {
-                        newInts.add(anInt);
+                        newHighScores.add(anInt);
                     }
                 }
             }
 
-            if (check){
-                if(newInts.size() == 0 || (newInts.size() < 10 && !done)){
+            if (check || highScores.size() < 10){
+                if(newHighScores.size() == 0 || (newHighScores.size() < 10 && !done)){
                     String name = optionPane.showInputDialog(dialog, "What is your name", "Empty");
                     newScore.setName(name);
-                    newInts.add(newScore);
+                    newHighScores.add(newScore);
                 }
                 file = new File("Resources/HighScore/highScore.hs");
-                writeToFile(newInts, file);
+                writeToFile(newHighScores, file);
 
             }
         }
