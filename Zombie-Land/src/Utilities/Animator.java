@@ -19,6 +19,10 @@ public class Animator {
         this.frames = frames;
     }
 
+    public void setFrames(ArrayList<BufferedImage> frames){
+        this.frames = frames;
+    }
+
     public void setSpeed(long speed) {
         this.speed = speed;
     }

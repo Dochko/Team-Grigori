@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player{
-    private ArrayList<BufferedImage> spritesMove;
+    private ArrayList<BufferedImage> spritesMoveGun;
+    private ArrayList<BufferedImage> spritesMoveShotgun;
+    private ArrayList<BufferedImage> spritesMoveGauss;
     private ArrayList<BufferedImage> spritesDead;
     private Animator animator;
 
@@ -49,14 +51,26 @@ public class Player{
     private Sound player_grunt = new Sound("sound/Player/grunt.wav");
 
     public Player() {
-        this.spritesMove = new ArrayList<>();
+        this.spritesMoveGun = new ArrayList<>();
+        this.spritesMoveShotgun = new ArrayList<>();
+        this.spritesMoveGauss = new ArrayList<>();
         this.spritesDead = new ArrayList<>();
 
         try {
-            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne0.png")));
-            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne1.png")));
-            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne2.png")));
-            this.spritesMove.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne3.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne0.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne1.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne2.png")));
+            this.spritesMoveGun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunOne3.png")));
+
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo0.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo1.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo2.png")));
+            this.spritesMoveShotgun.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunTwo3.png")));
+
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree0.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree1.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree2.png")));
+            this.spritesMoveGauss.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/movingWithGunThree3.png")));
 
             this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing0.png")));
             this.spritesDead.add(ImageIO.read(new File("Resources/Sprites/PlayerSprites/dieing1.png")));
@@ -66,7 +80,7 @@ public class Player{
             e.printStackTrace();
         }
 
-        this.animator = new Animator(this.spritesMove);
+        this.animator = new Animator(this.spritesMoveGun);
         this.animator.setSpeed(200);
         this.animator.start();
         this.animator.update(System.currentTimeMillis());
@@ -178,32 +192,45 @@ public class Player{
         this.animator = new Animator(this.spritesDead);
         this.animator.setSpeed(200);
         this.animator.start();
-        animator.update(System.currentTimeMillis());
+        this.animator.update(System.currentTimeMillis());
     }
 
     public void update() {
         if (this.isDead()) {
-            animator.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
         }
+
+        if(weaponType == 1){
+            this.animator.setFrames(this.spritesMoveGun);
+        }
+
+        if(weaponType == 2){
+            this.animator.setFrames(this.spritesMoveShotgun);
+        }
+
+        if(weaponType == 3){
+            this.animator.setFrames(this.spritesMoveGauss);
+        }
+
 
         if (this.left && !this.isDead()) {
             this.dx = -this.speed;
-            animator.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
         }
 
         if (this.right && !this.isDead()) {
             this.dx = this.speed;
-            animator.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
         }
 
         if (this.up && !this.isDead()) {
             this.dy = -this.speed;
-            animator.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
         }
 
         if (this.down && !this.isDead()) {
             this.dy = this.speed;
-            animator.update(System.currentTimeMillis());
+            this.animator.update(System.currentTimeMillis());
         }
 
         this.x += this.dx;
