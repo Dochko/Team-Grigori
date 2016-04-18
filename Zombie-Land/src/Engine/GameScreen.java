@@ -30,7 +30,7 @@ public class GameScreen extends JFrame {
     private Timer timer;
     private FrameRateCounter frameCounter;
 
-    private int FPS = 1000 / 60;
+    private int FPS = 1000 / 30;
     private int averageFPS;
 
     public static Player player;
@@ -50,6 +50,8 @@ public class GameScreen extends JFrame {
     public static int deadEnemiesCounter;
     public static int gameScore = 0;
     public static int difficult;
+
+    private boolean gamePause = false;
 
     private boolean gameEnded;
 
@@ -241,9 +243,7 @@ public class GameScreen extends JFrame {
             }
 
             // bonuses update
-            for (Bonus bonus : bonuses) {
-                bonus.update();
-            }
+            bonuses.forEach(Bonus::update);
 
             // player bullet - enemy collision
             for (int i = 0; i < projectiles.size(); i++) {
@@ -255,19 +255,26 @@ public class GameScreen extends JFrame {
 
                     if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead() && player.getWeaponType() != 3) {
                         enemy.hit(bullet.getBulletDamage());
-                        projectiles.remove(i);
-                        i--;
+                        bullet.setTargetHit(true);
                         break;
                     } else if (playerBulletBorder.intersects(enemyBorder) && !enemy.isDead()) {
                         enemy.hit(bullet.getBulletDamage());
                     } else if(enemy.isDead() && !enemy.getDroppedBonus()) {
-                        int rnd = (int) (Math.random() * 16);
-                        if(rnd == 5 || rnd == 10 || rnd == 15) {
+                        //bonus creation and spawning
+                        int rnd = (int) ((Math.random() * 30) + 1);
+                        if(rnd == 10 || rnd == 20 || rnd == 30) {
                             bonuses.add(new Bonus((int) enemy.getX(), (int) enemy.getY()));
                         }
 
                         enemy.setDroppedBonus(true);
                     }
+                }
+            }
+
+            for (int i = 0; i < projectiles.size(); i++) {
+                if(projectiles.get(i).getTargetHit()){
+                    projectiles.remove(i);
+                    i--;
                 }
             }
 
@@ -567,6 +574,17 @@ public class GameScreen extends JFrame {
         public void keyPressed(KeyEvent key) {
 
             player_run.Play();
+
+            if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+                if(gamePause) {
+                    timer.start();
+                    gamePause = false;
+                }else{
+                    timer.stop();
+                    gamePause = true;
+                }
+            }
+
 
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(true);

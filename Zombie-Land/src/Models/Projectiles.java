@@ -14,6 +14,7 @@ public class Projectiles {
     private int width;
     private int height;
     private Rectangle bulletBorder;
+    private boolean targetHit;
 
     private int x;
     private int y;
@@ -35,6 +36,8 @@ public class Projectiles {
 
         this.width = image.getWidth();
         this.height = image.getHeight();
+
+        this.targetHit = false;
 
         this.x = x;
         this.y = y;
@@ -61,6 +64,13 @@ public class Projectiles {
 
     public void setBulletDamage(int damage) {
         this.bulletDamage = damage;
+    }
+
+    public void setTargetHit(boolean targetHit){
+        this.targetHit = targetHit;
+    }
+    public boolean getTargetHit(){
+        return this.targetHit;
     }
 
     public boolean update() {
