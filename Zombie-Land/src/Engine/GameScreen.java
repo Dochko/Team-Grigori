@@ -531,20 +531,22 @@ public class GameScreen extends JFrame {
         // The wave spawn method.
         private void createNewEnemies() {
             enemies.clear();
-
+            deadEnemiesCounter = 0;
             if(waveNumber <= endWaveNumber) {
                 if (waveNumber % 5 == 0 && waveNumber > 1) {
                     // change background every 5 levels
                     int randomState = (int) (Math.random() * 4);
                     gsm.setState(randomState);
+                    int numberOfBosses = (waveNumber / 5) * GameScreen.difficult;
 
-                    deadEnemiesCounter = ((defaultSpawnEnemySize * waveNumber + 1) / 2) * GameScreen.difficult;
-                    for (int i = 0; i < (waveNumber / 5) * GameScreen.difficult; i++) {
+                    deadEnemiesCounter = ((defaultSpawnEnemySize * waveNumber) / 2) * GameScreen.difficult;
+                    for (int i = 0; i < numberOfBosses; i++) {
                         enemies.add(new Enemy(4));
                     }
-                    for (int i = 1; i < deadEnemiesCounter; i++) {
+                    for (int j = 1; j < deadEnemiesCounter; j++) {
                         enemies.add(new Enemy((int) ((Math.random() * 3) + 1)));
                     }
+                    deadEnemiesCounter += numberOfBosses;
                 } else {
                     deadEnemiesCounter = (defaultSpawnEnemySize * waveNumber) * GameScreen.difficult;
                     for (int i = 0; i < deadEnemiesCounter; i++) {
