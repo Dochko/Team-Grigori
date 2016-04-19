@@ -275,7 +275,7 @@ public class Player{
                         GameScreen.projectiles.add(bullet);
                         firingTimer = System.nanoTime();
 
-                        player_shoot_ak74.setVolumeDown(20f);
+                        player_shoot_ak74.setVolumeDown(16f);
                         player_shoot_ak74.PlayGunSound();
                     }
                 }
@@ -305,7 +305,7 @@ public class Player{
                         this.firingTimer = System.nanoTime();
                         this.shotgunAmmo -= 10;
 
-                        player_shoot_shotgun.setVolumeDown(13f);
+                        player_shoot_shotgun.setVolumeDown(12f);
                         player_shoot_shotgun.PlayGunSound();
                     }
                 }
@@ -325,7 +325,7 @@ public class Player{
                         this.gaussAmmo--;
 
 
-                        player_shoot_gauss.setVolumeDown(12f);
+                        player_shoot_gauss.setVolumeDown(11f);
                         player_shoot_gauss.PlayGunSound();
                     }
                 }

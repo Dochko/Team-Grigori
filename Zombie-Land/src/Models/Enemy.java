@@ -92,7 +92,7 @@ public class Enemy {
             // Normal zombie
             case 1:
                 zombie_die = new Sound("sound/Zombies/zombie-die1.wav");
-                zombie_die.setVolumeDown(12f);
+                zombie_die.setVolumeDown(15f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/NormalZombie/normalZombieMoving1.png")));
@@ -123,7 +123,7 @@ public class Enemy {
             //Zombie Dog
             case 2:
                 zombie_die = new Sound("sound/Zombies/zombie-dog-die.wav");
-                zombie_die.setVolumeDown(4f);
+                zombie_die.setVolumeDown(8f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/Dog/dogMove1.png")));
@@ -153,7 +153,7 @@ public class Enemy {
             //Advanced Zombie
             case 3:
                 zombie_die = new Sound("sound/Zombies/zombie-die2.wav");
-                zombie_die.setVolumeDown(12f);
+                zombie_die.setVolumeDown(15f);
                 try {
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove0.png")));
                     this.spritesMove.add(ImageIO.read(new File("Resources/Models/Enemies/AdvancedZombie/AdvancedZombieMove1.png")));
