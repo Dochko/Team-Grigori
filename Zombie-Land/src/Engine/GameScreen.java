@@ -46,7 +46,7 @@ public class GameScreen extends JFrame {
     private int waveDelay = 2000; // wave start delay
     private int waveNumber;
     private int defaultSpawnEnemySize = 10;
-    private int endWaveNumber = 25;
+    private int endWaveNumber = 1;
     public static int deadEnemiesCounter;
     public static int gameScore = 0;
     public static int difficult;
@@ -99,7 +99,7 @@ public class GameScreen extends JFrame {
             this.addKeyListener(new KeyAdapter());
             this.addMouseMotionListener(new mouseMotionAdapter());
             this.addMouseListener(new mouseAdapter());
-            setPreferredSize(new Dimension(GameScreen.WIDTH, GameScreen.HEIGHT));
+            this.setPreferredSize(new Dimension(GameScreen.WIDTH, GameScreen.HEIGHT));
             this.setFocusable(true);
             this.requestFocusInWindow();
         }
@@ -125,17 +125,18 @@ public class GameScreen extends JFrame {
                 }
                 gameDraw();
 
-                if (player.isDead() && player.getAnimator()) {
+                if (player.isDead() && player.getAnimator() || gameEnded == true) {
 
                     timer.stop();
+
                     try{
                         checkHighScore(gameScore);
                     }catch (IOException | ClassNotFoundException e){
                         System.out.println(e.getMessage());
                     }
-                    enemies.clear();
 
                 }
+
             });
 
             timer.setRepeats(true);
@@ -159,7 +160,7 @@ public class GameScreen extends JFrame {
             waveStartTimer = 0;
             waveStartTimerDiff = 0;
             waveStart = true;
-            waveNumber = 4;
+            waveNumber = 0;
             gameScore = 0;
             gameEnded = false;
         }
@@ -532,12 +533,6 @@ public class GameScreen extends JFrame {
                 str = "press ESC to go back to Menu.";
                 length = (int) g.getFontMetrics().getStringBounds(str, g).getWidth();
                 g.drawString(str, GameScreen.WIDTH / 2 - length / 2, (GameScreen.HEIGHT / 2) + 50);
-
-                try{
-                    checkHighScore(gameScore);
-                }catch (IOException | ClassNotFoundException e){
-                    System.out.println(e.getMessage());
-                }
             }
         }
 
@@ -593,9 +588,6 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent key) {
-
-            player_run.Play();
-
             if (key.getKeyCode() == KeyEvent.VK_SPACE) {
                 if(gamePause) {
                     timer.start();
@@ -609,18 +601,22 @@ public class GameScreen extends JFrame {
 
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(true);
+                player_run.Play();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_S) {
                 player.setDown(true);
+                player_run.Play();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_A) {
                 player.setLeft(true);
+                player_run.Play();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_D) {
                 player.setRight(true);
+                player_run.Play();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_1) {
@@ -647,21 +643,25 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyReleased(KeyEvent key) {
-            player_run.Stop();
+
             if (key.getKeyCode() == KeyEvent.VK_W) {
                 player.setUp(false);
+                player_run.Stop();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_S) {
                 player.setDown(false);
+                player_run.Stop();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_A) {
                 player.setLeft(false);
+                player_run.Stop();
             }
 
             if (key.getKeyCode() == KeyEvent.VK_D) {
                 player.setRight(false);
+                player_run.Stop();
             }
         }
     }

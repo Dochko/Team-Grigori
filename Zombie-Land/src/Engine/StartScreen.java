@@ -158,7 +158,7 @@ public class StartScreen extends JFrame {
             choice = "";
         }
 
-        GameScreen window = new GameScreen();
+        //GameScreen window = new GameScreen();
         switch ((String)choice){
             case "Normal":
                 GameScreen.difficult = 1;
@@ -178,9 +178,10 @@ public class StartScreen extends JFrame {
         if (!choice.equals("")) {
             intro.Stop();
             this.dispose();
-            window.setIconImage(new ImageIcon(windowIconPath).getImage());
-            window.setTitle(windowTitle);
-            window.setVisible(true);
+            //window.setIconImage(new ImageIcon(windowIconPath).getImage());
+            //window.setTitle(windowTitle);
+            //window.setVisible(true);
+            EventQueue.invokeLater(() -> new GameScreen().setVisible(true));
         }
     }
 
@@ -272,7 +273,7 @@ public class StartScreen extends JFrame {
     }
 
     private void helpScreen(ActionEvent evt) {
-        String helpBackgroundPath = "Resources/Backgrounds/emptyScreen.jpg";
+        String helpBackgroundPath = "Resources/Backgrounds/emptyStartScreen.jpg";
         ImageHandler ih = new ImageHandler(this);
         Image img = ih.loadImage(helpBackgroundPath);
         helpPane = new BackgroundImageComponent(img);;
